@@ -1,2 +1,2 @@
-# Privaugarder
-Privaugarder: The Online Privacy Toolkit
+# Navagetur
+Navagetur: The Online Privacy Toolkit
