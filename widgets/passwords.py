@@ -28,6 +28,9 @@ class Password(object):
     def generate(self, length):
         return "".join([random.choice(self.characters) for i in range(length)])
 
+    def generate_letter_heavy(self, length):
+        return "".join([random.choice("".join([self.characters, 4*self.lowercase])) for i in range(length)])
+
     def print_password(self, length):
         print("\n{}\n".format(self.random_password_generator(length)))
 
