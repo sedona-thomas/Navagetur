@@ -39,7 +39,7 @@ class Password(object):
     def brute_force_attack(self, password):
         leak, search = self.check_leaks(password), self.search_time(password)
         time = leak if leak != -1 and leak < search else search
-        end = " (leaked password)" if self.check_leaks(password) != -1 else ""
+        end = " (leaked password)" if leak != -1 else ""
         if time / (60 * 60 * 24 * 365) > 1:
             return "{:.0f} years{}".format(time / (60 * 60 * 24 * 365), end)
         elif time / (60 * 60 * 24) > 1:
@@ -104,6 +104,26 @@ if __name__ == "__main__":
     password = password_handler.generate(5)
     print(password)
     print(password_handler.brute_force_attack(password))
+
+    print()
+
+    print("15 chars, upper, lower, number, special char: ", "dhbaa4786ASD#$%#")
+    print(password_handler.brute_force_attack("dhbaa4786ASD#$%#"))
+
+    print()
+
+    print("15 chars, upper, lower, number: ", "fjdknfjfnASEDE123")
+    print(password_handler.brute_force_attack("fjdknfjfnASEDE123"))
+
+    print()
+
+    print("15 chars, upper, lower: ", "dhdhjfbhjAWSEDF")
+    print(password_handler.brute_force_attack("dhdhjfbhjAWSEDF"))
+
+    print()
+
+    print("15 chars, lower: ", "fjdknfjfnhdnjhd")
+    print(password_handler.brute_force_attack("fjdknfjfnhdnjhd"))
 
     print()
 
