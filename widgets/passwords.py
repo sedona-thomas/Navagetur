@@ -39,7 +39,7 @@ class Password(object):
     def brute_force_attack(self, password):
         leak, search = self.check_leaks(password), self.search_time(password)
         time = leak if leak != -1 and leak < search else search
-        end = " (leaked password)" if self.check_leaks(password) == -1 else ""
+        end = " (leaked password)" if self.check_leaks(password) != -1 else ""
         if time / (60 * 60 * 24 * 365) > 1:
             return "{:.0f} years{}".format(time / (60 * 60 * 24 * 365), end)
         elif time / (60 * 60 * 24) > 1:
