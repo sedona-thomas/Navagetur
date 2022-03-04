@@ -15,7 +15,16 @@ import os
 
 class Password(object):
 
+    """
+    Password generates passwords and calculates the time to brute force crack passwords
+    """
+
     def __init__(self):
+        """
+        Construct a new 'Password' object.
+
+        :return: returns nothing
+        """
         self.letters = string.ascii_letters
         self.lowercase = string.ascii_lowercase
         self.uppercase = string.ascii_uppercase
@@ -28,15 +37,38 @@ class Password(object):
         self.characters = "".join(chars)
 
     def generate(self, length):
+        """
+        Generates a random password of specified length
+
+        :param length: length of the password
+        :return: returns a random password
+        """
         return "".join([random.choice(self.characters) for i in range(length)])
 
     def generate_letter_heavy(self, length):
+        """
+        Generates a random password of specified length with a higher ratio of lowercase letters
+
+        :param length: length of the password
+        :return: returns a random password
+        """
         return "".join([random.choice("".join([self.characters, 4*self.lowercase])) for i in range(length)])
 
     def print_password(self, length):
+        """
+        Prints a random password
+
+        :return: returns nothing
+        """
         print("\n{}\n".format(self.random_password_generator(length)))
 
     def brute_force_attack(self, password):
+        """
+        Calculates the time to brute force crack a password
+
+        :param :password password to check
+        :return: returns a string describing the time to brute force crack the password
+        """
         leak, search = self.check_leaks(password), self.search_time(password)
         time = leak if leak != -1 and leak < search else search
         end = " (leaked password)" if leak != -1 else ""
@@ -53,11 +85,23 @@ class Password(object):
             return s.format(time, end)
 
     def search_time(self, password):
+        """
+        Calculates the time to brute force check all passwords of the same composition
+
+        :param :password password to check
+        :return: returns seconds to generate all passwords with same characteristics
+        """
         possible_passwords = self.search_space(password)
         computation_time = self.runtime_test()
         return possible_passwords * computation_time  # seconds
 
     def search_space(self, password):
+        """
+        Calculates the search space to brute force crack a password
+
+        :param :password password to check
+        :return: returns number of possible combinations of password composition
+        """
         possibilities, pw_set = 0, set(password)
         for s in [self.lowercase, self.uppercase, self.numbers, self.punctuation]:
             if len(set(s).intersection(pw_set)) > 0:
@@ -65,6 +109,11 @@ class Password(object):
         return (possibilities ** len(password))
 
     def runtime_test(self):
+        """
+        Tests the time to execute single iteration of a loop on current device
+
+        :return: returns seconds to execute one loop iteration
+        """
         length = 100
         start = time.time()  # seconds
         li = [0 for i in range(length)]  # runs in C speed
@@ -72,6 +121,12 @@ class Password(object):
         return ((end - start) / length)  # seconds
 
     def check_leaks(self, password):
+        """
+        Calculates the time find a password in leaked password lists
+
+        :param :password password to check
+        :return: returns time to find password in files or -1 if not found
+        """
         start = time.time()
         filepath = '../leaked_passwords/'
         files = os.listdir(filepath)
@@ -83,8 +138,14 @@ class Password(object):
                     return time.time() - start  # seconds
         return -1
 
-    def nonRM_txt(self, s):
-        return "readme" not in s.lower() and s.endswith(".txt")
+    def nonRM_txt(self, filename):
+        """
+        Calculates the time to brute force crack a password
+
+        :param :filename a file name
+        :return: returns if the file is a text file and not a README file
+        """
+        return "readme" not in filename.lower() and filename.endswith(".txt")
 
 
 if __name__ == "__main__":
