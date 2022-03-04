@@ -77,7 +77,13 @@ class Password(object):
         leak, search = self.check_leaks(password), self.search_time(password)
         time = leak if leak != -1 and leak < search else search
         end = " (leaked password)" if leak != -1 else ""
-        if time / (60 * 60 * 24 * 365) > 1:
+        if time / (60 * 60 * 24 * 365 * 1000) > 1:
+            return "{:.0f} millennia{}".format(time / (60 * 60 * 24 * 365 * 1000), end)
+        elif time / (60 * 60 * 24 * 365 * 100) > 1:
+            return "{:.0f} centuries{}".format(time / (60 * 60 * 24 * 365 * 100), end)
+        elif time / (60 * 60 * 24 * 365 * 10) > 1:
+            return "{:.0f} decades{}".format(time / (60 * 60 * 24 * 365 * 10), end)
+        elif time / (60 * 60 * 24 * 365) > 1:
             return "{:.0f} years{}".format(time / (60 * 60 * 24 * 365), end)
         elif time / (60 * 60 * 24) > 1:
             return "{:.0f} days{}".format(time / (60 * 60 * 24), end)
