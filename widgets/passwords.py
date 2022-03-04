@@ -112,8 +112,8 @@ if __name__ == "__main__":
 
     print()
 
-    print("15 chars, upper, lower, number: ", "fjdknfjfnASEDE123")
-    print(password_handler.brute_force_attack("fjdknfjfnASEDE123"))
+    print("15 chars, upper, lower, number: ", "fjdknfjASEDE123")
+    print(password_handler.brute_force_attack("fjdknfjASEDE123"))
 
     print()
 
