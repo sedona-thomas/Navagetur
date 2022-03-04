@@ -2,9 +2,13 @@
 # -*- coding: utf-8 -*-
 """
     Random password generator and password security checker
-
-    @author: sedonathomas
 """
+
+__author__ = "Sedona Thomas"
+__date__ = "03/04/2022"
+__version__ = "1.0.1"
+__maintainer__ = "Sedona Thomas"
+__email__ = "sedona.thomas@columbia.edu"
 
 import random
 import string
