@@ -9,6 +9,7 @@
 import random
 import string
 import time
+import os
 
 
 class Password(object):
@@ -56,6 +57,20 @@ class Password(object):
         end = time.time()  # seconds
         return ((end - start) / length) / (60 * 60 * 24)  # days
 
+    def check_leaks(self, password):
+        filepath = '../leaked_passwords/'
+        files = os.listdir(filepath)
+        files = [file for file in files if self.nonRM_txt(file)]
+        for filename in files:
+            with open(filepath + filename) as file:
+                leaked_passwords = [line.rstrip() for line in file]
+                if password in leaked_passwords:
+                    return True
+        return False
+
+    def nonRM_txt(self, s):
+        return "readme" not in s.lower() and s.endswith(".txt")
+
 
 if __name__ == "__main__":
     password_handler = Password()
@@ -79,3 +94,5 @@ if __name__ == "__main__":
 
     print("password")
     print(password_handler.brute_force_attack("password"))
+
+    print(password_handler.check_leaks("password"))
