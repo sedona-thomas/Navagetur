@@ -8,6 +8,7 @@
 
 import random
 import string
+import math
 import time
 import os
 
@@ -36,12 +37,25 @@ class Password(object):
         print("\n{}\n".format(self.random_password_generator(length)))
 
     def brute_force_attack(self, password):
-        return self.search_time(password)
+        leak, search = self.check_leaks(password), self.search_time(password)
+        time = leak if leak != -1 and leak < search else search
+        end = " (leaked password)" if self.check_leaks(password) == -1 else ""
+        if time / (60 * 60 * 24 * 365) > 1:
+            return "{:.0f} years{}".format(time / (60 * 60 * 24 * 365), end)
+        elif time / (60 * 60 * 24) > 1:
+            return "{:.0f} days{}".format(time / (60 * 60 * 24), end)
+        elif time / (60 * 60) > 1:
+            return "{:.0f} hours{}".format(time / (60 * 60), end)
+        elif time / (60) > 1:
+            return "{:.0f} minutes{}".format(time / (60), end)
+        else:
+            s = "{:." + str(3 + abs(int(math.log10(time)))) + "f} seconds{}"
+            return s.format(time, end)
 
     def search_time(self, password):
         possible_passwords = self.search_space(password)
         computation_time = self.runtime_test()
-        return possible_passwords * computation_time
+        return possible_passwords * computation_time  # seconds
 
     def search_space(self, password):
         possibilities, pw_set = 0, set(password)
@@ -53,11 +67,12 @@ class Password(object):
     def runtime_test(self):
         length = 100
         start = time.time()  # seconds
-        li = [random.choice(self.characters) for i in range(length)]
+        li = [0 for i in range(length)]  # runs in C speed
         end = time.time()  # seconds
-        return ((end - start) / length) / (60 * 60 * 24)  # days
+        return ((end - start) / length)  # seconds
 
     def check_leaks(self, password):
+        start = time.time()
         filepath = '../leaked_passwords/'
         files = os.listdir(filepath)
         files = [file for file in files if self.nonRM_txt(file)]
@@ -65,8 +80,8 @@ class Password(object):
             with open(filepath + filename) as file:
                 leaked_passwords = [line.rstrip() for line in file]
                 if password in leaked_passwords:
-                    return True
-        return False
+                    return time.time() - start  # seconds
+        return -1
 
     def nonRM_txt(self, s):
         return "readme" not in s.lower() and s.endswith(".txt")
@@ -95,4 +110,7 @@ if __name__ == "__main__":
     print("password")
     print(password_handler.brute_force_attack("password"))
 
-    print(password_handler.check_leaks("password"))
+    print()
+
+    print("a")
+    print(password_handler.brute_force_attack("a"))
