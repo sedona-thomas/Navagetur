@@ -30,6 +30,7 @@ class Password(object):
 
         :return: returns nothing
         """
+        self.filepath = '../leaked_passwords/'
         self.letters = string.ascii_letters
         self.lowercase = string.ascii_lowercase
         self.uppercase = string.ascii_uppercase
@@ -139,11 +140,10 @@ class Password(object):
         :return: returns time to find password in files or -1 if not found
         """
         start = time.time()
-        filepath = '../leaked_passwords/'
-        files = os.listdir(filepath)
+        files = os.listdir(self.filepath)
         files = [file for file in files if self.nonRM_txt(file)]
         for filename in files:
-            with open(filepath + filename) as file:
+            with open(self.filepath + filename) as file:
                 leaked_passwords = [line.rstrip() for line in file]
                 if password in leaked_passwords:
                     return time.time() - start  # seconds
