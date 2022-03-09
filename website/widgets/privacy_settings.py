@@ -8,8 +8,6 @@ __maintainer__ = "Sedona Thomas"
 __links__ = ["https://github.com/sedona-thomas/Navagetur"]
 __email__ = "sedona.thomas@columbia.edu"
 
-
-from pysondb import db
 import json
 import datetime
 from passwords import Password
