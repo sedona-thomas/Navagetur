@@ -1,15 +1,8 @@
 nav {
-  top: 0;
-  height: 5%;
-  width: 100%;
-  border: solid 1px #3333ff;
-  background-color: #ffffff;
-  position: fixed;
+  border: 0%;
   padding: 1%;
   margin: 0%;
-}
-
-nav .nav_button {
+  margin-bottom: 10%;
 }
 
 nav a {
@@ -19,16 +12,17 @@ nav a {
 }
 
 nav a:hover {
-  color: #003df5;
+  color: #ffff00;
 }
 
 nav ul {
-  text-align: center;
-  margin: 0px;
+  text-align: left;
+  vertical-align: middle;
+  margin: 0%;
   list-style-type: none;
 }
 
 nav ul li {
   display: inline;
-  margin: 0px 10px;
+  margin: 0% 10px;
 }

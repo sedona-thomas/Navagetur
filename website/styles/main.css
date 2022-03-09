@@ -16,12 +16,6 @@ body {
   color: #000000;
 }
 
-header {
-  width: 100%;
-  display: block;
-  margin-bottom: 2%;
-}
-
 h1 {
   font-size: 50px;
 }
@@ -38,12 +32,34 @@ h4 {
   font-size: 20px;
 }
 
+header,
+footer {
+  display: block;
+  height: 5%;
+  font-size: 18px;
+}
+
+header {
+  top: 0%;
+}
+
+footer {
+  top: 95%;
+}
+
+.fixed_bar {
+  background-color: #cccccc;
+  position: fixed;
+  width: 100%;
+  padding: 0.5%;
+}
+
 hr {
   background-color: #000000;
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid #3333ff;
+  border-top: 1px solid #4e4e4e;
   margin: 1em 0;
   padding: 0;
 }
