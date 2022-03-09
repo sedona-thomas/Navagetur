@@ -45,10 +45,10 @@ class AccountData(object):
         data["password"] = input("Enter password: ")
         data["password_change"] = input(
             "Enter date of last password change (MM/DD/YYYY):")
-        data["mfa"] = yes_no_input(
+        data["mfa"] = self.yes_no_input(
             "Is multi-factor authentication enabled (y/n): ")
         if data["mfa"] == "y":
-            data["app_passcodes"] = yes_no_input(
+            data["app_passcodes"] = self.yes_no_input(
                 "Have you saved app passcodes (y/n): ")
             data["authenticators"] = self.askLoop("Enter authenticator device")
             data["keys"] = self.askLoop("Enter authenticator key")
