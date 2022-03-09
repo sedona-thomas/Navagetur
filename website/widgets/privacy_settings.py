@@ -161,7 +161,7 @@ class AccountSecurity(object):
     def makeHtml(self):
         f = open("table.html", "w")
         with open("../pages/page_framework.html") as file:
-            li = self.splitOnTag(file)
+            li = self.splitOnTag("".join([line for line in file]))
         f.write(li[0] + self.returnTable() + li[1])
         f.close()
 
