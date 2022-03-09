@@ -1,0 +1,31 @@
+table {
+  width: 90%;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+th {
+  text-align: left;
+}
+
+td {
+  vertical-align: middle;
+}
+
+th,
+td {
+  width: auto;
+  height: auto;
+  padding: 0.25%;
+}
+
+tr td:last-child {
+  width: 1%;
+  white-space: nowrap;
+}
+
+table,
+th,
+td {
+  border: 1px solid;
+}
