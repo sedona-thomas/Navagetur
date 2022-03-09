@@ -45,6 +45,13 @@ footer {
   padding: 3%;
 }
 
+article {
+}
+
+section {
+  padding: 2%;
+}
+
 hr {
   background-color: #000000;
   display: block;
