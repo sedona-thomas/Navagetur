@@ -66,7 +66,7 @@ class AccountData(object):
         return li
 
     def yes_no_input(self, prompt):
-        return if input(prompt) == "y"
+        return input(prompt) == "y"
 
     def returnTable(self):
         db, tb = self.accounts.getAll(), "<table id=\"account_data\"> <tr>"
