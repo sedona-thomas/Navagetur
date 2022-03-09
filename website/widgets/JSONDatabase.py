@@ -10,6 +10,7 @@ __email__ = "sedona.thomas@columbia.edu"
 
 
 import json
+import os
 
 
 class JSONDatabase(object):
