@@ -54,7 +54,7 @@ class AccountSecurity(object):
         f.write("<h1> Account Security </h1>")
         f.write("</section>")
         f.write("<section><div class=\"table_wrapper\">")
-        f.write(self.returnTable() + "<\div></section>")
+        f.write(self.returnTable() + "</div></section>")
 
     def splitOnContentTag(self, text):
         open_tag = re.search("<\s*article\s*class=\"content\">", text)
