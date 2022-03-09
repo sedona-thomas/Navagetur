@@ -1,3 +1,11 @@
+"""
+    Consent law checker by zipcode
+"""
+
+__author__ = "Christian Revels-Robinson"
+__date__ = "03/08/2022"
+__version__ = "1.0.1"
+
 from uszipcode import SearchEngine
 engine = SearchEngine();
 val = input("Enter zip code: ");
