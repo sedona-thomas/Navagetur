@@ -17,8 +17,16 @@ class AccountData(object):
 
     def __init__(self, filename):
         self.accounts = JSONDatabase(filename)
-        self.fields = ["site_name", "username", "password", "password_change",
-                       "mfa", "app_passcodes", "authenticators", "keys", "phone_numbers"]
+        self.fields = {"site_name": "Website Name",
+                       "username": "Username",
+                       "password": "Password",
+                       "password_change": "Password Change",
+                       "mfa": "Multi-Factor Authentication",
+                       "app_passcodes": "Generated App Passcodes",
+                       "authenticators": "Authenticator Devices",
+                       "keys": "Authentication Keys",
+                       "phone_numbers": "Phone Numbers"
+                       }
 
     def getFields(self):
         return self.fields
@@ -58,7 +66,7 @@ class AccountData(object):
 
     def returnTable(self):
         db, tb = self.accounts.getAll(), "<table id=\"account_data\"> <tr>"
-        for field in self.fields:
+        for field in self.fields.values():
             tb += "<th>" + field + "</th>"
         tb += "</tr>"
         tb += self.accounts.getTableBody()

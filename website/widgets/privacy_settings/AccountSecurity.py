@@ -27,13 +27,13 @@ class AccountSecurity(object):
     def passwordStats(self):
         password_handler = Password()
         for row in self.accounts:
-            self.fields.append("time_to_crack")
-            row["time_to_crack"] = password_handler.brute_force_attack(
+            self.fields["time_to_brute_force"] = "Time to Brute Force Attack"
+            row["time_to_brute_force"] = password_handler.brute_force_attack(
                 row["password"])
 
     def returnTable(self):
         tb = "<table id=\"privacy_settings\"> <thead><tr>"
-        for field in self.fields:
+        for field in self.fields.values():
             tb += "<th>" + field + "</th>"
         tb += "</tr> </thead>"
         tb += "<tbody>" + self.accounts.getTableBody() + "</tbody>"
