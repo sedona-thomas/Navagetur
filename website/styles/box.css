@@ -1,0 +1,23 @@
+#box {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+#box_left,
+#box_right {
+  display: inline-block;
+  margin-bottom: 2%;
+}
+
+#box_left {
+  width: 12%;
+  float: left;
+  margin-right: 2%;
+}
+
+#box_right {
+  width: 86%;
+  float: left;
+  display: inline-block;
+}
