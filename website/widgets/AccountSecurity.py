@@ -45,12 +45,16 @@ class AccountSecurity(object):
         with open("../pages/page_framework.html") as file:
             li = self.splitOnContentTag("".join([line for line in file]))
         f.write(li[0])
+        self.writeBody(f)
+        f.write(li[1])
+        f.close()
+
+    def writeBody(self, f):
         f.write("<section id=\"home\" role=\"main\">")
         f.write("<h1> Account Security </h1>")
         f.write("</section>")
-        f.write("<section>" + self.returnTable() + "</section>")
-        f.write(li[1])
-        f.close()
+        f.write("<section><div class=\"table_wrapper\">")
+        f.write(self.returnTable() + "<\div></section>")
 
     def splitOnContentTag(self, text):
         open_tag = re.search("<\s*article\s*class=\"content\">", text)
