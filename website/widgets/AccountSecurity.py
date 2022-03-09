@@ -40,6 +40,7 @@ class AccountSecurity(object):
         return tb + "</table>"
 
     def makeHtml(self):
+        self.generateStats()
         f = open("../pages/table.html", "w")
         with open("../pages/page_framework.html") as file:
             li = self.splitOnTag("".join([line for line in file]))
