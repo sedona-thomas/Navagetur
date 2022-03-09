@@ -27,20 +27,20 @@ header {
 }
 
 footer {
-  top: 95%;
+  top: 93.5%;
 }
 
 .fixed_bar {
   background-color: #cccccc;
   position: fixed;
-  width: 100%;
+  width: 99%;
   padding: 0.5%;
 }
 
 .content {
   top: 5%;
   bottom: 95%;
-  width: 94%;
+  width: 95% 92% 95% 92%;
   overflow-y: hidden;
   padding: 3%;
 }
