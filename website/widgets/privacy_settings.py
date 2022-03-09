@@ -10,19 +10,57 @@ __email__ = "sedona.thomas@columbia.edu"
 
 
 from pysondb import db
+import json
 import datetime
 from passwords import Password
+
+
+class JSONDatabase(object):
+    def __init__(self, filename):
+        self.filename = filename
+        self.database = self.read()
+
+    def add(self, entry):
+        self.database.append(entry)
+        self.write()
+
+    def getAll(self):
+        return self.database
+
+    def read(self):
+        with open(self.filename) as file:
+            return json.load(file)
+
+    def write(self):
+        f = open(self.filename, "w")
+        f.write(json.dumps(self.database))
+        f.close()
+
+    def getTable(self):
+        return "<table>" + self.getTableBody() + "</table>"
+
+    def getTableBody(self):
+        tb = ""
+        for row in db:
+            tb += "<tr>"
+            for k in row:
+                tb += "<th>" + row[k] + "</th>"
+            tb += "</tr>"
+        return tb
 
 
 class AccountData(object):
 
     def __init__(self, filename):
-        self.accounts = db.getDb(filename)
+        self.accounts = JSONDatabase(filename)
         self.fields = ["site_name", "username", "password", "password_change",
                        "mfa", "app_passcodes", "authenticators", "keys", "phone_numbers"]
 
     def getFieldsDb(self):
         return self.fields, self.accounts
+
+    def getAccounts(self):
+        return self.accounts.getAll()
 
     def askForAccounts(self):
         while input("Would you like to enter an account (y/n)?") != "n":
@@ -34,16 +72,7 @@ class AccountData(object):
         data["username"] = input("Enter username: ")
         data["password"] = input("Enter password: ")
         data["password_change"] = self.askForDateOfPasswordChange()
-        data["mfa"] = input("Is multi-factor authentication enabled (y/n): ")
-        if data["mfa"] == "y":
-            data["app_passcodes"] = input(
-                "Have you saved app passcodes(y/n): ")
-            data["authenticators"] = self.askLoop("Enter authenticator device")
-            data["keys"] = self.askLoop("Enter authenticator key")
-            data["phone_numbers"] = self.askLoop("Enter phone number")
-        else:
-            for k in ["app_passcodes", "authenticators", "keys", "phone_numbers"]:
-                data[k] = None
+        self.multiFactorAuthentication()
         self.accounts.add(data)
 
     def askLoop(self, prompt):
@@ -53,6 +82,18 @@ class AccountData(object):
             next = input(prompt + " or type \"done\" when finished")
         return li
 
+    def multiFactorAuthentication(self):
+        data["mfa"] = input("Is multi-factor authentication enabled (y/n): ")
+        if data["mfa"] == "y":
+            data["app_passcodes"] = input(
+                "Have you saved app passcodes (y/n): ")
+            data["authenticators"] = self.askLoop("Enter authenticator device")
+            data["keys"] = self.askLoop("Enter authenticator key")
+            data["phone_numbers"] = self.askLoop("Enter phone number")
+        else:
+            for k in ["app_passcodes", "authenticators", "keys", "phone_numbers"]:
+                data[k] = None
+
     def askForDateOfPasswordChange(self):
         date_str = input("Enter date of last password change (MM/DD/YYYY):")
         date = date_str.strip().split("/")
@@ -61,19 +102,12 @@ class AccountData(object):
     def dateString(self, date):
         return date.strftime("%x")
 
-    def getAccounts(self):
-        return self.accounts.getAll()
-
     def returnTable(self):
-        db, tb = self.accounts.getAll(), "<table id=\"privacy_settings\"> <tr>"
+        db, tb = self.accounts.getAll(), "<table id=\"account_data\"> <tr>"
         for field in self.fields:
             tb += "<th>" + field + "</th>"
         tb += "</tr>"
-        for row in db:
-            tb += "<tr>"
-            for k in row:
-                tb += "<th>" + row[k] + "</th>"
-            tb += "</tr>"
+        self.accounts.getTableBody()
         return tb + "</table>"
 
 
@@ -97,11 +131,7 @@ class AccountSecurity(object):
         for field in self.fields:
             tb += "<th>" + field + "</th>"
         tb += "</tr>"
-        for row in db:
-            tb += "<tr>"
-            for k in row:
-                tb += "<th>" + row[k] + "</th>"
-            tb += "</tr>"
+        self.accounts.getTableBody()
         return tb + "</table>"
 
     def makeHtml(self):
