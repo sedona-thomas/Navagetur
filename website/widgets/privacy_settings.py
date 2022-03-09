@@ -30,13 +30,14 @@ class AccountData(object):
 
     def askForAccount(self):
         data = {}
-        data["site_name"] = input("Enter site name:")
-        data["username"] = input("Enter username:")
-        data["password"] = input("Enter password:")
+        data["site_name"] = input("Enter site name: ")
+        data["username"] = input("Enter username: ")
+        data["password"] = input("Enter password: ")
         data["password_change"] = self.askForDateOfPasswordChange()
-        data["mfa"] = input("Is multi-factor authentication enabled (y/n):")
-        if mfa == "y":
-            data["app_passcodes"] = input("Have you saved app passcodes(y/n):")
+        data["mfa"] = input("Is multi-factor authentication enabled (y/n): ")
+        if data["mfa"] == "y":
+            data["app_passcodes"] = input(
+                "Have you saved app passcodes(y/n): ")
             data["authenticators"] = self.askLoop("Enter authenticator device")
             data["keys"] = self.askLoop("Enter authenticator key")
             data["phone_numbers"] = self.askLoop("Enter phone number")
@@ -48,7 +49,7 @@ class AccountData(object):
     def askLoop(self, prompt):
         li, next = [], input(prompt + " or type \"done\" when finished")
         while next != "done":
-            authenticators.append(next)
+            li.append(next)
             next = input(prompt + " or type \"done\" when finished")
         return li
 
