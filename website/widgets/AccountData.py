@@ -45,9 +45,10 @@ class AccountData(object):
         data["password"] = input("Enter password: ")
         data["password_change"] = input(
             "Enter date of last password change (MM/DD/YYYY):")
-        data["mfa"] = input("Is multi-factor authentication enabled (y/n): ")
+        data["mfa"] = yes_no_input(
+            "Is multi-factor authentication enabled (y/n): ")
         if data["mfa"] == "y":
-            data["app_passcodes"] = input(
+            data["app_passcodes"] = yes_no_input(
                 "Have you saved app passcodes (y/n): ")
             data["authenticators"] = self.askLoop("Enter authenticator device")
             data["keys"] = self.askLoop("Enter authenticator key")
@@ -63,6 +64,9 @@ class AccountData(object):
             li.append(next)
             next = input(prompt + " or type \"done\" when finished")
         return li
+
+    def yes_no_input(self, prompt):
+        return if input(prompt) == "y"
 
     def returnTable(self):
         db, tb = self.accounts.getAll(), "<table id=\"account_data\"> <tr>"
