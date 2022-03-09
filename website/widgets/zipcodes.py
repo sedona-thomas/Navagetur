@@ -14,6 +14,7 @@ __links__ = ["https://github.com/sedona-thomas/Navagetur"]
 __email__ = "crr2159@columbia.edu"
 
 from uszipcode import SearchEngine
+# https://uszipcode.readthedocs.io/uszipcode/search.html
 
 
 class RecordingPrivacyFinder(object):
@@ -73,7 +74,10 @@ class DataPrivacyFinder(object):
 
 
 def run():
-    finder = PrivacyFinder()
+    finder = RecordingPrivacyFinder()
+    finder.printLaws()
+
+    finder = DataPrivacyFinder()
     finder.printLaws()
 
 
