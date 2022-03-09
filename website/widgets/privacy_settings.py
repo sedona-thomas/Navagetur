@@ -8,7 +8,7 @@ __maintainer__ = "Sedona Thomas"
 __links__ = ["https://github.com/sedona-thomas/Navagetur"]
 __email__ = "sedona.thomas@columbia.edu"
 
-
+from AccountData import *
 from AccountSecurity import *
 
 
@@ -16,7 +16,6 @@ def test():
     data = AccountData("../data/test.json")
     data.askForAccounts()
     security = AccountSecurity(data)
-    security.generateStats()
     security.makeHtml()
 
 
