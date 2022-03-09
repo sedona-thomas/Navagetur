@@ -1,3 +1,14 @@
+import my_app.views
+import os
+from flask import Flask, session, request
+
+app = Flask(__name__)
+
+# load main config
+app.config.from_pyfile('../config.py')
+
+
+'''
 from flask import Flask, session, request
 from PyQt5.QtCore import *
 from PyQt5.QtWebEngineWidgets import *
@@ -33,3 +44,4 @@ if __name__ == "__main__":
     # start sub-thread to open the browser.
     Timer(1, lambda: ui("http://127.0.0.1:5000/")).start()
     flask_app.run(debug=False)
+'''
