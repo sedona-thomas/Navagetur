@@ -1,6 +1,4 @@
-/* 
- * Privaugarder Formatting
- *
+/*
  * @author Sedona Thomas
  */
 
@@ -14,6 +12,7 @@ body {
   float: left;
   font-size: 17px;
   color: #000000;
+  width: 100%;
 }
 
 header,
@@ -41,15 +40,9 @@ footer {
 .content {
   top: 5%;
   bottom: 95%;
+  width: 94%;
   overflow-y: hidden;
   padding: 3%;
-}
-
-article {
-}
-
-section {
-  padding: 2%;
 }
 
 hr {
