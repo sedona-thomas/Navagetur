@@ -16,22 +16,6 @@ body {
   color: #000000;
 }
 
-h1 {
-  font-size: 50px;
-}
-
-h2 {
-  font-size: 40px;
-}
-
-h3 {
-  font-size: 25px;
-}
-
-h4 {
-  font-size: 20px;
-}
-
 header,
 footer {
   display: block;
@@ -52,6 +36,13 @@ footer {
   position: fixed;
   width: 100%;
   padding: 0.5%;
+}
+
+.content {
+  top: 5%;
+  bottom: 95%;
+  overflow-y: hidden;
+  padding: 3%;
 }
 
 hr {
