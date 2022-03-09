@@ -56,13 +56,6 @@ class AccountData(object):
             next = input(prompt + " or type \"done\" when finished")
         return li
 
-    def getDate(self, date_str):
-        date = date_str.strip().split("/")
-        return datetime.datetime(int(date[2]), int(date[0]), int(date[1]))
-
-    def dateString(self, date):
-        return date.strftime("%x")
-
     def returnTable(self):
         db, tb = self.accounts.getAll(), "<table id=\"account_data\"> <tr>"
         for field in self.fields:
@@ -70,3 +63,10 @@ class AccountData(object):
         tb += "</tr>"
         tb += self.accounts.getTableBody()
         return tb + "</table>"
+
+    def getDate(self, date_str):
+        date = date_str.strip().split("/")
+        return datetime.datetime(int(date[2]), int(date[0]), int(date[1]))
+
+    def dateString(self, date):
+        return date.strftime("%x")

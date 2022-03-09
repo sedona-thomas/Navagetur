@@ -43,10 +43,10 @@ class AccountSecurity(object):
         self.generateStats()
         f = open("../pages/table.html", "w")
         with open("../pages/page_framework.html") as file:
-            li = self.splitOnTag("".join([line for line in file]))
+            li = self.splitOnContentTag("".join([line for line in file]))
         f.write(li[0] + self.returnTable() + li[1])
         f.close()
 
-    def splitOnTag(self, text):
+    def splitOnContentTag(self, text):
         open_tag = re.search("<\s*article\s*class=\"content\">", text)
         return [text[:open_tag.span()[-1]], text[open_tag.span()[-1]:]]
