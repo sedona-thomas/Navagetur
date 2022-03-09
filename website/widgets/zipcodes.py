@@ -17,6 +17,7 @@ from uszipcode import SearchEngine
 
 
 class RecordingPrivacyFinder(object):
+    # source: https://www.mwl-law.com/wp-content/uploads/2018/02/RECORDING-CONVERSATIONS-CHART.pdf
     def __init__(self):
         self.engine = SearchEngine()
         self.state = self.getState()
@@ -49,12 +50,12 @@ class RecordingPrivacyFinder(object):
 
 
 class DataPrivacyFinder(object):
+    # source: https://www.ncsl.org/research/telecommunications-and-information-technology/2021-consumer-data-privacy-legislation.aspx
     def __init__(self):
         self.engine = SearchEngine()
         self.state = self.getState()
-        self.regulated = ["AR", "AZ", "CA", "CO", "FL", "MD", "MT",
-                          "NV", "OR", "SC", "SD", "UT", "VA"]
-        self.unregulated = []  # get states
+        self.regulated = ["AR", "AZ", "CA", "CO", "FL",
+                          "MD", "MT", "NV", "OR", "SC", "SD", "UT", "VA"]
 
     def getState(self):
         val = input("Enter zip code: ")
