@@ -44,7 +44,8 @@ class AccountSecurity(object):
         f = open("../pages/table.html", "w")
         with open("../pages/page_framework.html") as file:
             li = self.splitOnContentTag("".join([line for line in file]))
-        f.write(li[0] + self.returnTable() + li[1])
+        f.write(li[0] + "<section>" +
+                self.returnTable() + "</section>" + li[1])
         f.close()
 
     def splitOnContentTag(self, text):
