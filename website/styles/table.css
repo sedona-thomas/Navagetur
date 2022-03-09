@@ -1,7 +1,15 @@
 table {
-  width: 90%;
+  width: 100%;
   border-collapse: collapse;
   white-space: nowrap;
+  overflow-x: scroll;
+}
+
+.table-wrapper {
+  border: 1px solid blue;
+  width: 100%;
+  height: auto
+  overflow: auto;
 }
 
 th {
