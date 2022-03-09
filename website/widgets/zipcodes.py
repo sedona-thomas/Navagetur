@@ -5,6 +5,9 @@
 __author__ = "Christian Revels-Robinson"
 __date__ = "03/08/2022"
 __version__ = "1.0.1"
+__maintainer__ = "Christian Revels-Robinson"
+__links__ = ["https://github.com/sedona-thomas/Navagetur"]
+__email__ = "crr2159@columbia.edu"
 
 from uszipcode import SearchEngine
 engine = SearchEngine();
