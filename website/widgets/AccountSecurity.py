@@ -23,6 +23,7 @@ class AccountSecurity(object):
 
     def generateStats(self):
         self.passwordStats()
+        self.scoreSafety()
 
     def passwordStats(self):
         password_handler = Password()
@@ -30,6 +31,19 @@ class AccountSecurity(object):
             self.fields["time_to_brute_force"] = "Time to Brute Force Attack"
             row["time_to_brute_force"] = password_handler.brute_force_attack(
                 row["password"])
+
+    def scoreSafety(self):
+        password_handler = Password()
+        for row in self.accounts:
+            self.fields["safety_score"] = "Safety Score"
+            brute_force = password_handler.brute_force_attack_value(
+                row["password"])
+            pw_change = self.getDate(row["password_change"])
+            score = 0
+            score += 1 if brute_force / ((60 * 60 * 24 * 365)) > 100 else 0
+            score += 1 if self.passwordChange(pw_change) else 0
+            score += 1 if row["mfa"] else 0
+            row["safety_score"] = str(score / 3 * 100) + "%"
 
     def returnTable(self):
         tb = "<table id=\"privacy_settings\"> <thead><tr>"
@@ -59,3 +73,20 @@ class AccountSecurity(object):
     def splitOnContentTag(self, text):
         open_tag = re.search("<\s*article\s*class=\"content\">", text)
         return [text[:open_tag.span()[-1]], text[open_tag.span()[-1]:]]
+
+    def passwordChange(self, date):
+        '''Checks if password has been changed within six months'''
+        if not date:
+            return False
+        else:
+            return (datetime.datetime.now() - date).days > 365 / 2
+
+    def getDate(self, date_str):
+        date = date_str.strip().split("/")
+        try:
+            return datetime.datetime(int(date[2]), int(date[0]), int(date[1]))
+        except:
+            return None
+
+    def dateString(self, date):
+        return date.strftime("%x")

@@ -96,6 +96,16 @@ class Password(object):
             s = "{:." + str(3 + abs(int(math.log10(time)))) + "f} seconds{}"
             return s.format(time, end)
 
+    def brute_force_attack_value(self, password):
+        """
+        Calculates the time to brute force crack a password
+
+        :param :password password to check
+        :return: returns the time to brute force crack the password
+        """
+        leak, search = self.check_leaks(password), self.search_time(password)
+        return leak if leak != -1 and leak < search else search
+
     def search_time(self, password):
         """
         Calculates the time to brute force check all passwords of the same composition
