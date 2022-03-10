@@ -35,7 +35,7 @@ class AccountData(object):
         return self.accounts
 
     def askForAccounts(self):
-        while input("Would you like to enter an account (y/n)?") != "n":
+        while input("Would you like to enter an account (y/n)? ") != "n":
             self.askForAccount()
 
     def askForAccount(self):
@@ -44,25 +44,26 @@ class AccountData(object):
         data["username"] = input("Enter username: ")
         data["password"] = input("Enter password: ")
         data["password_change"] = input(
-            "Enter date of last password change (MM/DD/YYYY):")
+            "Enter date of last password change (MM/DD/YYYY): ")
         data["mfa"] = self.yes_no_input(
             "Is multi-factor authentication enabled (y/n): ")
         if data["mfa"] == "y":
             data["app_passcodes"] = self.yes_no_input(
                 "Have you saved app passcodes (y/n): ")
-            data["authenticators"] = self.askLoop("Enter authenticator device")
-            data["keys"] = self.askLoop("Enter authenticator key")
-            data["phone_numbers"] = self.askLoop("Enter phone number")
+            data["authenticators"] = self.askLoop(
+                "Enter authenticator device: ")
+            data["keys"] = self.askLoop("Enter authenticator key: ")
+            data["phone_numbers"] = self.askLoop("Enter phone number: ")
         else:
             for k in ["app_passcodes", "authenticators", "keys", "phone_numbers"]:
                 data[k] = None
         self.accounts.add(data)
 
     def askLoop(self, prompt):
-        li, next = [], input(prompt + " or type \"done\" when finished")
+        li, next = [], input(prompt + " or type \"done\" when finished: ")
         while next != "done":
             li.append(next)
-            next = input(prompt + " or type \"done\" when finished")
+            next = input(prompt + " or type \"done\" when finished: ")
         return li
 
     def yes_no_input(self, prompt):
