@@ -43,7 +43,7 @@ class AccountSecurity(object):
             score += 1 if brute_force / ((60 * 60 * 24 * 365)) > 100 else 0
             score += 1 if self.passwordChange(pw_change) else 0
             score += 1 if row["mfa"] else 0
-            row["safety_score"] = str((score // 3) * 100) + "%"
+            row["safety_score"] = str(int(score / 3) * 100) + "%"
 
     def returnTable(self):
         tb = "<table id=\"privacy_settings\"> <thead><tr>"
