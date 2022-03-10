@@ -20,7 +20,7 @@ class AccountData(object):
         self.fields = {"site_name": "Website Name",
                        "username": "Username",
                        "password": "Password",
-                       "password_change": "Password Change",
+                       "password_change": "Date of Last Password Change",
                        "mfa": "Multi-Factor Authentication",
                        "app_passcodes": "Generated App Passcodes",
                        "authenticators": "Authenticator Devices",
@@ -40,14 +40,15 @@ class AccountData(object):
 
     def askForAccount(self):
         data = {}
-        data["site_name"] = input("Enter site name: ")
-        data["username"] = input("Enter username: ")
-        data["password"] = input("Enter password: ")
-        data["password_change"] = input(
+        print("Hit return at any time to skip a field.")
+        data["site_name"] = self.processInput("Enter site name: ")
+        data["username"] = self.processInput("Enter username: ")
+        data["password"] = self.processInput("Enter password: ")
+        data["password_change"] = self.processInput(
             "Enter date of last password change (MM/DD/YYYY): ")
         data["mfa"] = self.yes_no_input(
             "Is multi-factor authentication enabled (y/n): ")
-        if data["mfa"] == "y":
+        if data["mfa"]:
             data["app_passcodes"] = self.yes_no_input(
                 "Have you saved app passcodes (y/n): ")
             data["authenticators"] = self.askLoop(
@@ -59,15 +60,22 @@ class AccountData(object):
                 data[k] = None
         self.accounts.add(data)
 
+    def processInput(self, prompt):
+        user_input = input(prompt)
+        return user_input if len(user_input) > 0 else None
+
     def askLoop(self, prompt):
-        li, next = [], input(prompt + " or type \"done\" when finished: ")
-        while next != "done":
+        li, next = [], self.processInput(
+            prompt + " or hit return key when finished: ")
+        while next:
             li.append(next)
-            next = input(prompt + " or type \"done\" when finished: ")
+            next = self.processInput(
+                prompt + " or hit return key when finished: ")
         return li
 
     def yes_no_input(self, prompt):
-        return input(prompt) == "y"
+        user_input = input(prompt)
+        return input(prompt) == "y" if len(user_input) > 0 else None
 
     def returnTable(self):
         db, tb = self.accounts.getAll(), "<table id=\"account_data\"> <tr>"
