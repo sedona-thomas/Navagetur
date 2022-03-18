@@ -66,6 +66,7 @@ class AccountSecurity(object):
     def writeBody(self, f):
         f.write("<section id=\"home\" role=\"main\">")
         f.write("<h1> Account Security </h1>")
+        f.write("<p>Learn more about account security in the education page!</p>")
         f.write("</section>")
         f.write("<section><div class=\"table_wrapper\">")
         f.write(self.returnTable() + "</div></section>")
