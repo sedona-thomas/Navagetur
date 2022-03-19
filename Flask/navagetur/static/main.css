@@ -1,0 +1,56 @@
+/*
+ * @author Sedona Thomas
+ */
+
+body {
+  background-color: #ffffff;
+  margin: 0%;
+  border: 0%;
+  padding: 0%;
+  font-family: "Times New Roman", Times, serif;
+  text-align: left;
+  float: left;
+  font-size: 17px;
+  color: #000000;
+  width: 100%;
+}
+
+header,
+footer {
+  display: block;
+  height: 5%;
+  font-size: 18px;
+}
+
+header {
+  top: 0%;
+}
+
+footer {
+  top: 93.5%;
+}
+
+.fixed_bar {
+  background-color: #cccccc;
+  position: fixed;
+  width: 99%;
+  padding: 0.5%;
+}
+
+.content {
+  top: 5%;
+  bottom: 95%;
+  width: 95% 92% 95% 92%;
+  overflow-y: hidden;
+  padding: 3%;
+}
+
+hr {
+  background-color: #000000;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #4e4e4e;
+  margin: 1em 0;
+  padding: 0;
+}
