@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head <meta charset="utf-8">
+
+    <meta http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Sedona Thomas">
+    <meta name="description" content="">
+    <meta name=”robots” content=”index,follow”>
+    <meta name=”keywords” content=””>
+
+    <link href="../static/main.css" rel="stylesheet" type="text/css">
+    <link href="../static/nav.css" rel="stylesheet" type="text/css">
+    <link href="../static/list.css" rel="stylesheet" type="text/css">
+    <link href="../static/box.css" rel="stylesheet" type="text/css">
+    <link href="../static/table.css" rel="stylesheet" type="text/css">
+    <link href="../static/citations.css" rel="stylesheet" type="text/css">
+
+    <link rel="icon" href="./img/icon.ico">
+    <title> Navagetur </title>
+</head>
+
+<body>
+
+    <header class="fixed_bar">
+        <nav role="navigation">
+            <a class="nav_button" href="./">Home</a>
+            <a class="nav_button" href="./education.html">Education</a>
+            <a class="nav_button" href="./widgets.html">Widgets</a>
+        </nav>
+    </header>
+
+    <article class="content">
+
+        <section role="main">
+
+        </section>
+
+        <section id="account_form">
+            <form method="POST" action="/add_account">
+
+                <label id="site_name">
+                    Website Name: <input name="site_name" type="text" size="20">
+                </label>
+
+                <label id="username">
+                    Username: <input name="username" type="text" size="20">
+                </label>
+
+                <label id="email">
+                    Email: <input name="email" type="text" size="20">
+                </label>
+
+                <label id="password">
+                    Password: <input name="password" type="text" size="20">
+                </label>
+
+                <label id="password_change">
+                    Date of Last Password Change: <input name="password_change" type="text" size="20">
+                </label>
+
+                <label id="mfa">
+                    Multi-Factor Authentication: <input name="mfa" type="text" size="20">
+                </label>
+
+                <label id="app_passcodes">
+                    Generated App Passcodes: <input name="app_passcodes" type="text" size="20">
+                </label>
+
+                <label id="authenticators">
+                    Authenticator Devices (separated by commas): <input name="authenticators" type="text" size="20">
+                </label>
+
+                <label id="keys">
+                    Authentication Keys (separated by commas): <input name="keys" type="text" size="20">
+                </label>
+
+                <label id="phone_numbers">
+                    Phone Numbers (separated by commas): <input name="phone_numbers" type="text" size="20">
+                </label>
+
+                <input type="submit" value="Add Account">
+            </form>
+        </section>
+
+        <section>
+            <div class="table_wrapper">
+                {{table}}
+            </div>
+        </section>
+
+    </article>
+
+    <footer class="fixed_bar">
+        <p>This project was created for Barnard's Privacy in a Networked World course by Sedona Thomas and Christian
+            Revels-Robinson.</p>
+    </footer>
+
+</body>
+
+<script src="../scripts/jquery.min.js"></script>
+<script type="text/javascript" src="../scripts/main.js"> </script>
+
+</html>

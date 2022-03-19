@@ -55,8 +55,8 @@ class AccountSecurity(object):
 
     def makeHtml(self):
         self.generateStats()
-        f = open("../pages/table.html", "w")
-        with open("../pages/page_framework.html") as file:
+        f = open("../templates/table.html", "w")
+        with open("../templates/page_framework.html") as file:
             li = self.splitOnContentTag("".join([line for line in file]))
         f.write(li[0])
         self.writeBody(f)

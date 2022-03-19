@@ -19,6 +19,7 @@ class AccountData(object):
         self.accounts = JSONDatabase(filename)
         self.fields = {"site_name": "Website Name",
                        "username": "Username",
+                       "email": "Email",
                        "password": "Password",
                        "password_change": "Date of Last Password Change",
                        "mfa": "Multi-Factor Authentication",
@@ -27,6 +28,9 @@ class AccountData(object):
                        "keys": "Authentication Keys",
                        "phone_numbers": "Phone Numbers"
                        }
+
+    def add(self, field_dict):
+        self.accounts.add(field_dict)
 
     def getFields(self):
         return self.fields
@@ -43,6 +47,7 @@ class AccountData(object):
         print("Hit return at any time to skip a field.")
         data["site_name"] = self.processInput("Enter site name: ")
         data["username"] = self.processInput("Enter username: ")
+        data["email"] = self.processInput("Enter email: ")
         data["password"] = self.processInput("Enter password: ")
         data["password_change"] = self.processInput(
             "Enter date of last password change (MM/DD/YYYY): ")

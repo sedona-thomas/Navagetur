@@ -35,7 +35,28 @@ def password():
 
 @app.route("/account_security.html")
 def account_security():
-    return render_template("account_security.html")
+    data = AccountData("../data/user.json")
+    security = AccountSecurity(data)
+    table = security.returnTable()
+    return render_template("account_security.html", table=table)
+
+
+@app.route('/add_account', methods=['POST'])
+def add_account():
+    fields = {"site_name": request.form["site_name"],
+              "username": request.form["username"],
+              "password": request.form["password"],
+              "password_change": request.form["password_change"],
+              "mfa": request.form["mfa"],
+              "app_passcodes": split_list(request.form["app_passcodes"]),
+              "authenticators": split_list(request.form["authenticators"]),
+              "keys": split_list(request.form["keys"]),
+              "phone_numbers": split_list(request.form["phone_numbers"])}
+    data = AccountData("../data/user.json")
+    data.add(fields)
+    security = AccountSecurity(data)
+    table = security.returnTable()
+    return render_template("account_security.html", table=table)
 
 
 @app.route("/law_locator.html")
@@ -56,3 +77,7 @@ def table():
 @app.route("/citations.html")
 def citations():
     return render_template("citations.html")
+
+
+def split_list(li):
+    return [x.strip() for x in li.split(",")]
