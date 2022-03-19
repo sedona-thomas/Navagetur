@@ -21,7 +21,7 @@ class RecordingPrivacyFinder(object):
             "income": None
         }
 
-    def askForQualities(self):
+    def getQualities(self, qualities_dict):
         pass
 
 

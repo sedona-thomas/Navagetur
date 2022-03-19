@@ -14,6 +14,8 @@ import requests
 from navagetur.widgets.AccountData import *
 from navagetur.widgets.AccountSecurity import *
 from navagetur.widgets.JSONDatabase import *
+from navagetur.widgets.passwords import *
+from navagetur.widgets.law_locator import *
 
 user_json_file = "navagetur/data/user.json"
 
@@ -38,6 +40,23 @@ def password():
     return render_template("password.html")
 
 
+@app.route('/enter_password', methods=['POST'])
+def enter_password():
+    password_handler = Password()
+    time_to_crack = password_handler.brute_force_attack(
+        request.form["password"])
+    print(time_to_crack)
+    return render_template("password.html", time_to_crack=time_to_crack)
+
+
+@app.route('/generate_password', methods=['POST'])
+def generate_password():
+    password_handler = Password()
+    random_password = password_handler.generate(15)
+    print(random_password)
+    return render_template("password.html", random_password=random_password)
+
+
 @app.route("/account_security.html")
 def account_security():
     data = AccountData(user_json_file)
@@ -51,6 +70,7 @@ def add_account():
     data = AccountData(user_json_file)
     data.add(getFields(request))
     security = AccountSecurity(data)
+    security.generateStats()
     table = security.returnTable()
     return redirect("/account_security.html", code=302)
 
@@ -84,6 +104,14 @@ def dateFormatting(request, name):
 @app.route("/law_locator.html")
 def law_locator():
     return render_template("law_locator.html")
+
+
+@app.route('/enter_zipcode', methods=['POST'])
+def enter_zipcode():
+    zipcode = request.form["zipcode"]
+    finder_record = RecordingPrivacyFinder(zipcode)
+    finder_data = DataPrivacyFinder(zipcode)
+    return render_template("law_locator.html", zipcode=zipcode, record=finder_record.returnLaws(), data=finder_data.returnLaws())
 
 
 @app.route("/personal_uniqueness.html")

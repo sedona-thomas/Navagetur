@@ -30,7 +30,7 @@ class Password(object):
 
         :return: returns nothing
         """
-        self.filepath = '../leaked_passwords/'
+        self.filepath = 'navagetur/leaked_passwords/'
         self.letters = string.ascii_letters
         self.lowercase = string.ascii_lowercase
         self.uppercase = string.ascii_uppercase

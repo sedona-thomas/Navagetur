@@ -19,9 +19,9 @@ from uszipcode import SearchEngine
 
 class RecordingPrivacyFinder(object):
     # source: https://www.mwl-law.com/wp-content/uploads/2018/02/RECORDING-CONVERSATIONS-CHART.pdf
-    def __init__(self):
+    def __init__(self, zipcode):
         self.engine = SearchEngine()
-        self.state = self.getState()
+        self.state = self.getState(zipcode)
         self.one_party = ["AL", "AK", "AR", "AZ", "DC",
                           "GA", "HI", "ID", "IN", "IA", "KS", "KY", "MI",
                           "LA", "ME", "MN", "MS", "MO", "NE",
@@ -33,8 +33,7 @@ class RecordingPrivacyFinder(object):
                             "FL", "DE", "CT", "CO", "CA"]
         self.no_regulation = ["VT"]
 
-    def getState(self):
-        val = input("Enter zip code: ")
+    def getState(self, val):
         zipcode = self.engine.by_zipcode(val)
         return zipcode.state
 
@@ -49,17 +48,24 @@ class RecordingPrivacyFinder(object):
         elif self.state in self.no_regulation:
             print("Your state has not regulated consent laws. ")
 
+    def returnLaws(self):
+        if self.state in self.one_party:
+            return "Your state has one party consent laws. "
+        elif self.state in self.mixed_party:
+            return "Your state has mixed party consent laws."
+        elif self.state in self.no_regulation:
+            return "Your state has not regulated consent laws. "
+
 
 class DataPrivacyFinder(object):
     # source: https://www.ncsl.org/research/telecommunications-and-information-technology/2021-consumer-data-privacy-legislation.aspx
-    def __init__(self):
+    def __init__(self, zipcode):
         self.engine = SearchEngine()
-        self.state = self.getState()
+        self.state = self.getState(zipcode)
         self.regulated = ["AR", "AZ", "CA", "CO", "FL",
                           "MD", "MT", "NV", "OR", "SC", "SD", "UT", "VA"]
 
-    def getState(self):
-        val = input("Enter zip code: ")
+    def getState(self, val):
         zipcode = self.engine.by_zipcode(val)
         return zipcode.state
 
@@ -72,12 +78,18 @@ class DataPrivacyFinder(object):
         else:
             print("Your state does not have data privacy restrictions. ")
 
+    def returnLaws(self):
+        if self.state in self.regulated:
+            return "Your state has data privacy regstrictions. "
+        else:
+            return "Your state does not have data privacy restrictions. "
+
 
 def run():
-    finder = RecordingPrivacyFinder()
+    finder = RecordingPrivacyFinder("10027")
     finder.printLaws()
 
-    finder = DataPrivacyFinder()
+    finder = DataPrivacyFinder("10000")
     finder.printLaws()
 
 
