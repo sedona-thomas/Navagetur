@@ -9,9 +9,9 @@ __links__ = ["https://github.com/sedona-thomas/Navagetur"]
 __email__ = "sedona.thomas@columbia.edu"
 
 import re
-from passwords import Password
-from JSONDatabase import *
-from AccountData import *
+from navagetur.widgets.passwords import Password
+from navagetur.widgets.JSONDatabase import *
+from navagetur.widgets.AccountData import *
 
 
 class AccountSecurity(object):

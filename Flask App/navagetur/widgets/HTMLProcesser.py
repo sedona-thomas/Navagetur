@@ -9,7 +9,7 @@ __links__ = ["https://github.com/sedona-thomas/Navagetur"]
 __email__ = "sedona.thomas@columbia.edu"
 
 from tabnanny import filename_only
-from JSONDatabase import *
+from navagetur.widgets.JSONDatabase import *
 
 
 class HTMLProcesser(object):

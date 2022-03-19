@@ -11,6 +11,11 @@ __email__ = "sedona.thomas@columbia.edu"
 from navagetur import app
 from flask import render_template, request, redirect
 import requests
+from navagetur.widgets.AccountData import *
+from navagetur.widgets.AccountSecurity import *
+from navagetur.widgets.JSONDatabase import *
+
+user_json_file = "navagetur/data/user.json"
 
 
 @app.route("/")
@@ -35,7 +40,7 @@ def password():
 
 @app.route("/account_security.html")
 def account_security():
-    data = AccountData("../data/user.json")
+    data = AccountData(user_json_file)
     security = AccountSecurity(data)
     table = security.returnTable()
     return render_template("account_security.html", table=table)
@@ -43,20 +48,37 @@ def account_security():
 
 @app.route('/add_account', methods=['POST'])
 def add_account():
-    fields = {"site_name": request.form["site_name"],
-              "username": request.form["username"],
-              "password": request.form["password"],
-              "password_change": request.form["password_change"],
-              "mfa": request.form["mfa"],
-              "app_passcodes": split_list(request.form["app_passcodes"]),
-              "authenticators": split_list(request.form["authenticators"]),
-              "keys": split_list(request.form["keys"]),
-              "phone_numbers": split_list(request.form["phone_numbers"])}
-    data = AccountData("../data/user.json")
-    data.add(fields)
+    data = AccountData(user_json_file)
+    data.add(getFields(request))
     security = AccountSecurity(data)
     table = security.returnTable()
-    return render_template("account_security.html", table=table)
+    return redirect("/account_security.html", code=302)
+
+
+def getFields(request):
+    fields = {"site_name": request.form["site_name"],
+              "username": request.form["username"],
+              "email": request.form["email"],
+              "password": request.form["password"],
+              "password_change": dateFormatting(request, "password_change"),
+              "mfa": request.form.get("mfa") != None}
+    if fields["mfa"]:
+        fields["app_passcodes"] = request.form.get("app_passcodes") != None
+        fields["authenticators"] = split_list(request.form["authenticators"])
+        fields["keys"] = split_list(request.form["keys"])
+        fields["phone_numbers"] = split_list(request.form["phone_numbers"])
+    else:
+        for k in ["app_passcodes", "authenticators", "keys", "phone_numbers"]:
+            fields[k] = None
+    return fields
+
+
+def split_list(li):
+    return [x.strip() for x in li.split(",")]
+
+
+def dateFormatting(request, name):
+    return request.form["password_change"] if request.form["password_change"] else None
 
 
 @app.route("/law_locator.html")
@@ -77,7 +99,3 @@ def table():
 @app.route("/citations.html")
 def citations():
     return render_template("citations.html")
-
-
-def split_list(li):
-    return [x.strip() for x in li.split(",")]

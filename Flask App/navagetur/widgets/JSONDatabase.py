@@ -50,7 +50,7 @@ class JSONDatabase(object):
             tb += "<tr>"
             for k in row:
                 cell = str(row[k]) if type(
-                    row[k]) is not list else " ,".join(row[k])
+                    row[k]) is not list else ", ".join(row[k])
                 tb += "<td>" + cell + "</td>"
             tb += "</tr>"
         return tb

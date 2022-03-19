@@ -34,59 +34,81 @@
     <article class="content">
 
         <section role="main">
-
+            <h1>Keep Track of Your Account Safety Precautions</h1>
+            <p>Add your accounts below.</p>
         </section>
 
         <section id="account_form">
             <form method="POST" action="/add_account">
 
-                <label id="site_name">
-                    Website Name: <input name="site_name" type="text" size="20">
-                </label>
+                <p>
+                    <label id="site_name">
+                        Website Name: <input name="site_name" type="text" size="20">
+                    </label>
+                </p>
+                <p>
+                    <label id="username">
+                        Username: <input name="username" type="text" size="20">
+                    </label>
+                </p>
 
-                <label id="username">
-                    Username: <input name="username" type="text" size="20">
-                </label>
+                <p>
+                    <label id="email">
+                        Email: <input name="email" type="email">
+                    </label>
+                </p>
 
-                <label id="email">
-                    Email: <input name="email" type="text" size="20">
-                </label>
+                <p>
+                    <label id="password">
+                        Password: <input name="password" type="text" size="20">
+                    </label>
+                </p>
 
-                <label id="password">
-                    Password: <input name="password" type="text" size="20">
-                </label>
+                <p>
+                    <label id="password_change">
+                        Date of Last Password Change: <input name="password_change" type="date">
+                    </label>
+                </p>
 
-                <label id="password_change">
-                    Date of Last Password Change: <input name="password_change" type="text" size="20">
-                </label>
+                <p>
+                    <label id="mfa">
+                        Multi-Factor Authentication: <input name="mfa" type="checkbox" value="yes">
+                    </label>
+                </p>
 
-                <label id="mfa">
-                    Multi-Factor Authentication: <input name="mfa" type="text" size="20">
-                </label>
+                <p>
+                    <label id="app_passcodes">
+                        Generated App Passcodes: <input name="app_passcodes" type="checkbox" value="yes">
+                    </label>
+                </p>
 
-                <label id="app_passcodes">
-                    Generated App Passcodes: <input name="app_passcodes" type="text" size="20">
-                </label>
+                <p>
+                    <label id="authenticators">
+                        Authenticator Devices (separated by commas): <input name="authenticators" type="text" size="50">
+                    </label>
+                </p>
 
-                <label id="authenticators">
-                    Authenticator Devices (separated by commas): <input name="authenticators" type="text" size="20">
-                </label>
+                <p>
+                    <label id="keys">
+                        Authentication Keys (separated by commas): <input name="keys" type="text" size="50">
+                    </label>
+                </p>
 
-                <label id="keys">
-                    Authentication Keys (separated by commas): <input name="keys" type="text" size="20">
-                </label>
-
-                <label id="phone_numbers">
-                    Phone Numbers (separated by commas): <input name="phone_numbers" type="text" size="20">
-                </label>
+                <p>
+                    <label id="phone_numbers">
+                        Phone Numbers (separated by commas): <input name="phone_numbers" type="text" size="50">
+                    </label>
+                </p>
 
                 <input type="submit" value="Add Account">
             </form>
         </section>
 
-        <section>
+        <hr>
+
+        <section id="account_table">
             <div class="table_wrapper">
-                {{table}}
+                {{table | safe}}
             </div>
         </section>
 
