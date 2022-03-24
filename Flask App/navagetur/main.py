@@ -125,7 +125,7 @@ def enter_characteristics():
             "gender": request.form["gender"] if request.form["gender"] != "choose" else None,
             "income": int(request.form["income"]) if len(request.form["income"]) > 0 else None}
     uniqueness_processor = Uniqueness(data)
-    uniqueness = uniqueness_processor.personal_uniqueness() 
+    uniqueness = uniqueness_processor.personalUniqueness() 
     #uniqueness = ", ".join([str(x) for x in [zipcode, gender, income]])
     return render_template("personal_uniqueness.html", uniqueness=uniqueness)
 

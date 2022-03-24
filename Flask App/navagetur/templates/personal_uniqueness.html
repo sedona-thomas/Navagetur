@@ -42,7 +42,8 @@
 
                     <p>
                         <label id="zipcode">
-                            Zipcode: <input name="zipcode" type="number" min="0" step="1" placeholder="zipcode">
+                            Zipcode: <input name="zipcode" type="number" min="0" step="1" placeholder="zipcode"
+                                required>
                         </label>
                     </p>
 
@@ -72,7 +73,9 @@
 
                 </form>
 
-                <p>{{uniqueness}}</p>
+                <section id="explanation">
+                    {{uniqueness | safe}}
+                </section>
 
             </div>
 
