@@ -14,7 +14,6 @@ from uszipcode import SearchEngine
 class Uniqueness(object):
     def __init__(self, data):
         self.engine = SearchEngine()
-        self.state = self.getState()
         self.data = data
         self.characteristics = ["zipcode", "gender", "income"]
 
