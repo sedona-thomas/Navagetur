@@ -11,22 +11,20 @@ __email__ = "sedona.thomas@columbia.edu"
 from uszipcode import SearchEngine
 
 
-class RecordingPrivacyFinder(object):
-    def __init__(self):
+class Uniqueness(object):
+    def __init__(self, data):
         self.engine = SearchEngine()
         self.state = self.getState()
-        self.qualities = {
-            "zipcode": None,
-            "gender": None,
-            "income": None
-        }
-
-    def getQualities(self, qualities_dict):
-        pass
+        self.data = data
+        self.characteristics = ["zipcode", "gender", "income"]
 
 
 def test():
-    pass
+    data = {"zipcode": 92157,
+            "gender": "man",
+            "income": 100000}
+    uniqueness_processor = Uniqueness(data)
+    print(uniqueness_processor.personal_uniqueness())
 
 
 if __name__ == "__main__":
