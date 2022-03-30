@@ -41,6 +41,13 @@ footer {
   top: 93.5%;
 }
 
+footer p {
+  border-radius: 15px;
+  padding: 0.5% 2%;
+  margin: 0.5% 1%;
+  background-color: #FFFFFF;
+}
+
 .fixed_bar {
   background-color: #ffb5a7;
   position: fixed;
@@ -70,8 +77,7 @@ hr {
   padding: 0;
 }
 
-.links {
-  text-align: center;
+.section_box {
   border: 5px solid #ffb5a7;
   background-color: none;
   border-radius: 15px;

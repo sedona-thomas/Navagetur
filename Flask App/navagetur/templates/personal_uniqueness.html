@@ -31,40 +31,42 @@
             <h1>Personal Uniqueness Widget</h1>
 
             <div id="uniqueness_widget">
-                <form method="POST" action="/enter_characteristics">
+                <div class="section_box">
+                    <form method="POST" action="/enter_characteristics">
 
-                    <p>
-                        <label id="zipcode">
-                            Zipcode: <input name="zipcode" type="number" min="0" step="1" placeholder="zipcode"
-                                required>
-                        </label>
-                    </p>
+                        <p>
+                            <label id="zipcode">
+                                Zipcode: <input name="zipcode" type="number" min="0" step="1" placeholder="zipcode"
+                                    required>
+                            </label>
+                        </p>
 
-                    <p>
-                        <label id="gender">
-                            Gender: <select id="gender_menu" name="gender">
-                                <option value="choose" selected>Choose a Gender Identity</option>
-                                <option value="woman">Woman</option>
-                                <option value="nonbinary">Non-Binary</option>
-                                <option value="man">Man</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </label>
-                    </p>
+                        <p>
+                            <label id="gender">
+                                Gender: <select id="gender_menu" name="gender">
+                                    <option value="choose" selected>Choose a Gender Identity</option>
+                                    <option value="woman">Woman</option>
+                                    <option value="nonbinary">Non-Binary</option>
+                                    <option value="man">Man</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </label>
+                        </p>
 
-                    <p>
-                        <label id="income">
-                            Income: <input name="income" type="number" min="0" step="1" placeholder="yearly income">
-                        </label>
-                    </p>
+                        <p>
+                            <label id="income">
+                                Income: <input name="income" type="number" min="0" step="1" placeholder="yearly income">
+                            </label>
+                        </p>
 
-                    <p>
-                        <label id="submit">
-                            Submit<input type="submit" value="Submit">
-                        </label>
-                    </p>
+                        <p>
+                            <label id="submit">
+                                Submit<input type="submit" value="Submit">
+                            </label>
+                        </p>
 
-                </form>
+                    </form>
+                </div>
 
                 <section id="explanation">
                     {{uniqueness | safe}}
