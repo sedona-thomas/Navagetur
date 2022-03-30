@@ -9,9 +9,9 @@ Navagetur: The Online Privacy Toolkit
 
 - Open your computer's terminal
 - Ensure that running `python --version` in the terminal returns python version 3 or higher
-    - If not, download at (https://www.python.org/downloads/)[https://www.python.org/downloads/]
+    - If not, download at [https://www.python.org/downloads/](https://www.python.org/downloads/)
 - Ensure that running `pip --version` in the terminal returns python version 3 or higher
-    - If not, download at (https://pip.pypa.io/en/stable/installation/)[https://pip.pypa.io/en/stable/installation/]
+    - If not, download at [https://pip.pypa.io/en/stable/installation/](https://pip.pypa.io/en/stable/installation/)
 - Run `./setup.sh` from the terminal
 
 ### Run Application
