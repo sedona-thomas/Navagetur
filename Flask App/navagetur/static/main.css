@@ -65,3 +65,31 @@ hr {
   padding: 0;
 }
 
+.links {
+  text-align: center;
+  border: 5px solid #ffb5a7;
+  background-color: none;
+  border-radius: 15px;
+  padding: 15px 32px;
+}
+
+.pretty_button {
+  text-align: center;
+  border: 1px solid #000000;
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  padding: 20px 40px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2% 8%;
+  cursor: pointer;
+}
+
+.pretty_button a {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 50px;
+  color: #000000;
+  text-decoration: none;
+}
