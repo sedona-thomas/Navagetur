@@ -83,8 +83,8 @@ class AccountSecurity(object):
             return (datetime.datetime.now() - date).days > 365 / 2
 
     def getDate(self, date_str):
-        date = date_str.strip().split("/")
         try:
+            date = date_str.strip().split("/")
             return datetime.datetime(int(date[2]), int(date[0]), int(date[1]))
         except:
             return None
