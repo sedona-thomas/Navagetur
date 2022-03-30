@@ -84,6 +84,17 @@ hr {
   padding: 15px 32px;
 }
 
+.group_box {
+  border: 5px solid #999999;
+  background-color: none;
+  border-radius: 15px;
+  padding: 5%;
+  margin: 2%;
+  display: inline-flex;
+  width: auto;
+  height: auto;
+}
+
 .pretty_button {
   text-align: center;
   border: 1px solid #000000;
