@@ -3,8 +3,23 @@ Navagetur: The Online Privacy Toolkit
 
 ## How to Install
 
+- Click `Code -> Download ZIP` to download the application and open the zipped file.
 
+### Setup Application
 
+- Open your computer's terminal
+- Ensure that running `python --version` in the terminal returns python version 3 or higher
+- Run `./setup.sh` from the terminal
+
+### Run Application
+
+- Open your computer's terminal
+- Run `./run.sh` from the terminal
+- If it doesn't automatically open, open `http://127.0.0.1:5000/`
+
+### Possible Issues
+
+- If the `./run.sh` script produces an error, run `python ./Flask\ App/run.py 5001` and open `http://127.0.0.1:5001/` (keep increasing 5001 until the error disappears)
 
 ## Widgets
 
