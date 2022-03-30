@@ -2,6 +2,13 @@
  * @author Sedona Thomas
  */
 
+@import "box.css";
+@import "citations.css";
+@import "list.css";
+@import "nav.css";
+@import "table.css";
+@import "widgets.css";
+
 body {
   background-color: #ffffff;
   margin: 0%;
@@ -15,8 +22,8 @@ body {
   width: 100%;
 }
 
-h1 { font-size: 40px; }
-h2 { font-size: 30px; }
+h1 { font-size: 35px; }
+h2 { font-size: 25px; }
 
 header,
 footer {
