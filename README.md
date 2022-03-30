@@ -9,6 +9,7 @@ Navagetur: The Online Privacy Toolkit
 
 - Open your computer's terminal
 - Ensure that running `python --version` in the terminal returns python version 3 or higher
+- Ensure that running `pip --version` in the terminal returns python version 3 or higher
 - Run `./setup.sh` from the terminal
 
 ### Run Application
