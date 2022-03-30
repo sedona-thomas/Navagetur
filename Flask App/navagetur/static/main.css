@@ -10,7 +10,7 @@
 @import "widgets.css";
 
 body {
-  background-color: #eee0e0;
+  background-color: #efefef;
   margin: 0%;
   border: 0%;
   padding: 0%;
@@ -41,7 +41,7 @@ footer {
 }
 
 .fixed_bar {
-  background-color: #b19e9e;
+  background-color: #ffb5a7;
   position: fixed;
   width: 99%;
   padding: 0.5%;
@@ -56,11 +56,11 @@ footer {
 }
 
 hr {
-  background-color: #c5c5c5;
+  background-color: #434343;
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid #c5c5c5;
+  border-top: 1px solid #434343;
   margin: 1em 0;
   padding: 0;
 }
