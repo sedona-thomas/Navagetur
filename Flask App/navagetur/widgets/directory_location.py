@@ -10,4 +10,4 @@ __email__ = "sedona.thomas@columbia.edu"
 
 import os
 
-pwd = "" if "navagetur" in os.listdir() else "Flask App"
+pwd = "" if "navagetur" in os.listdir() else "Flask App/"
