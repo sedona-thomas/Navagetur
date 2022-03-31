@@ -17,8 +17,9 @@ from navagetur.widgets.JSONDatabase import *
 from navagetur.widgets.passwords import *
 from navagetur.widgets.law_locator import *
 from navagetur.widgets.personal_uniqueness import *
+from navagetur.widgets.directory_location import *
 
-user_json_file = "navagetur/data/user.json"
+user_json_file = pwd + "navagetur/data/user.json"
 
 
 @app.route("/")

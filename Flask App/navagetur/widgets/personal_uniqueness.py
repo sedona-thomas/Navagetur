@@ -33,7 +33,8 @@ class Uniqueness(object):
         for s in self.characteristics:
             tb += "<td>{}</td>".format(s.title())
             tb += "<td>{}</td>".format(demographic_dict[s])
-            tb += "<td>{:.3g}%</td>".format((demographic_dict[s] / demographic_dict["zipcode"]) * 100)
+            if demographic_dict[s] != None:
+                tb += "<td>{:.3g}%</td>".format((demographic_dict[s] / demographic_dict["zipcode"]) * 100)
             tb += "</tr>"
         return tb + "</table>"
 

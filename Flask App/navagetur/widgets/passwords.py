@@ -16,6 +16,7 @@ import string
 import math
 import time
 import os
+from navagetur.widgets.directory_location import *
 
 
 class Password(object):
@@ -30,7 +31,7 @@ class Password(object):
 
         :return: returns nothing
         """
-        self.filepath = 'navagetur/leaked_passwords/'
+        self.filepath = pwd + 'navagetur/leaked_passwords/'
         self.letters = string.ascii_letters
         self.lowercase = string.ascii_lowercase
         self.uppercase = string.ascii_uppercase

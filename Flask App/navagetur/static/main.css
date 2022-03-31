@@ -49,7 +49,7 @@ footer p {
 }
 
 .fixed_bar {
-  background-color: #ffb5a7;
+  background-color: #ADD8E6;
   position: fixed;
   width: 99%;
   padding: 0.5%;
@@ -68,24 +68,24 @@ footer p {
 }
 
 hr {
-  background-color: #5f5f5f;
+  background-color: #00008b;
   display: block;
   height: 1px;
   border: 0;
-  border-top: 5px solid #5f5f5f;
+  border-top: 5px solid #00008b;
   margin: 1em 0;
   padding: 0;
 }
 
 .section_box {
-  border: 5px solid #ffb5a7;
+  border: 5px solid #ADD8E6;
   background-color: none;
   border-radius: 15px;
   padding: 15px 32px;
 }
 
 .group_box {
-  border: 5px solid #999999;
+  border: 5px solid #00008b;
   background-color: none;
   border-radius: 15px;
   padding: 5%;
