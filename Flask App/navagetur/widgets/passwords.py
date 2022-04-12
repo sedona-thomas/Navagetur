@@ -11,7 +11,7 @@ __maintainer__ = "Sedona Thomas"
 __links__ = ["https://github.com/sedona-thomas/Navagetur"]
 __email__ = "sedona.thomas@columbia.edu"
 
-import random
+import secrets # generates cryptographically secure random numbers
 import string
 import math
 import time
@@ -50,7 +50,7 @@ class Password(object):
         :param length: length of the password
         :return: returns a random password
         """
-        return "".join([random.choice(self.characters) for i in range(length)])
+        return "".join([secrets.choice(self.characters) for i in range(length)])
 
     def generate_letter_heavy(self, length):
         """
@@ -59,7 +59,7 @@ class Password(object):
         :param length: length of the password
         :return: returns a random password
         """
-        return "".join([random.choice("".join([self.characters, 4*self.lowercase])) for i in range(length)])
+        return "".join([secrets.choice("".join([self.characters, 4*self.lowercase])) for i in range(length)])
 
     def print_password(self, length):
         """
