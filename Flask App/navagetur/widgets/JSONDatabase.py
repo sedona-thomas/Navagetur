@@ -11,12 +11,15 @@ __email__ = "sedona.thomas@columbia.edu"
 
 import json
 import os
+from navagetur.widgets.encryption import *
 
 
 class JSONDatabase(object):
-    def __init__(self, filename):
+    def __init__(self, filename, password=""):
+        self._encryption = password != ""
         self._filename = filename
         self._database = self.read()
+        self._password = password
 
     def __iter__(self):
         ''' Returns the Iterator object '''
@@ -32,13 +35,21 @@ class JSONDatabase(object):
     def read(self):
         if os.stat(self._filename).st_size == 0:
             return []
+        elif self._encryption:
+            crypter = DataEncryption(self._password)
+            with open(self._filename) as file:
+                return json.load(crypter.decrypt(file))
         else:
             with open(self._filename) as file:
                 return json.load(file)
 
     def write(self):
         f = open(self._filename, "w")
-        f.write(json.dumps(self._database))
+        if self._encryption:
+            crypter = DataEncryption(self._password)
+            f.write(crypter.encrypt(json.dumps(self._database)))
+        else:
+            f.write(json.dumps(self._database))
         f.close()
 
     def getTable(self):
