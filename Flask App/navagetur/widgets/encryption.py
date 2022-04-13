@@ -22,7 +22,7 @@ class DataEncryption(object):
     DataEncryption encrypts and decrypts text given a password and salt
     """
 
-    def __init__(self, password, file="salt.txt"):
+    def __init__(self, password, filepath, file="salt.txt"):
         """
         Construct a new 'DataEncryption' object.
 
@@ -43,7 +43,6 @@ class DataEncryption(object):
         """
         byte_string = self._string_to_bytes(plaintext)
         token = self._crypter.encrypt(byte_string)
-        self._save_salt()
         return token
 
     def decrypt(self, ciphertext):
@@ -57,7 +56,7 @@ class DataEncryption(object):
         string = self._byte_to_utf8(byte_string)
         return string
 
-    def _save_salt(self):
+    def save_salt(self):
         """
         Saves the current salt in the data folder
 
@@ -133,9 +132,10 @@ class ReadWriteEncryption(object):
         self._salt_file = salt
         self._crypter = DataEncryption(password, salt)
 
-    def read(self):
-        return None
+    def read(self, string):
+        return self._crypter.decrypt(string)
 
-    def write(self):
+    def write(self, string):
         self._crypter.save_salt()
-        return None
+        with open(self._location(self._file), "wb") as file:
+            file.write(self._crypter.encrypt(string))

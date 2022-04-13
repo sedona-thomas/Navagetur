@@ -15,10 +15,8 @@ from navagetur.widgets.encryption import *
 
 
 class JSONDatabase(object):
-    def __init__(self, filename, password=""):
+    def __init__(self, filename):
         self._filename = filename
-        self._password = password
-        self._encryption = (password != "")
         self._database = self.read()
 
     def __iter__(self):
@@ -35,11 +33,6 @@ class JSONDatabase(object):
     def read(self):
         if os.stat(self._filename).st_size == 0:
             return []
-        elif self._encryption:
-            crypter = DataEncryption(self._password)
-            with open(self._filename, "rb") as file:
-                plaintext = crypter.decrypt(file.read())
-                return json.load(plaintext)
         elif self.is_json():
             with open(self._filename) as file:
                 return json.load(file)
@@ -47,12 +40,8 @@ class JSONDatabase(object):
             return []
 
     def write(self):
-        with open(self._filename, "wb") as f:
-            if self._encryption:
-                crypter = DataEncryption(self._password)
-                f.write(crypter.encrypt(json.dumps(self._database)))
-            else:
-                f.write(json.dumps(self._database))
+        with open(self._filename, "w") as f:
+            f.write(json.dumps(self._database))
 
     def getTable(self):
         return "<table>" + self.getTableBody() + "</table>"

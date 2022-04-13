@@ -15,10 +15,11 @@ from navagetur.widgets.encryption import *
 
 
 class EncryptedJSONDatabase(object):
-    def __init__(self, filename, password):
+    def __init__(self, filepath, filename, password):
+        self._filepath = filepath
         self._filename = filename
         self._password = password
-        self._crypter = DataEncryption(self._password)
+        self._crypter = DataEncryption(self._password, self._filepath)
         self._database = self.read()
 
     def __iter__(self):
