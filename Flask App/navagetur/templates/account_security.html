@@ -29,18 +29,20 @@
         <section role="main">
             <h1>Keep Track of Your Account Safety Precautions</h1>
             <p>Add your accounts below.</p>
+            <p>Click here to clear saved data and set a new password: <a href="./account_security.html">Set Password</a>
+            </p>
         </section>
 
         <section id="account_form">
 
             <div class="section_box">
-                <form method="POST" action="/set_password">
+                <form method="POST" action="/user_password">
                     <p>
                         <label id="password">
-                            Choose a Password: <input name="password" type="text" size="20">
+                            Please type your password: <input name="password" type="text" size="20">
                         </label>
                     </p>
-                    <input type="submit" value="Set Password">
+                    <input type="submit" value="Password">
                 </form>
             </div>
 
