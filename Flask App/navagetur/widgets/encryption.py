@@ -116,4 +116,25 @@ class DataEncryption(object):
         :return: nothing
         """
         with open(self._salt_file, "rb") as salt_file:
-            self._salt = "".join([line for line in file])
+            self._salt = file.read()
+
+
+class ReadWriteEncryption(object):
+
+    def __init__(self, password, file, salt="salt.txt"):
+        """
+        Construct a new 'ReadWriteEncryption' object.
+
+        :return: returns nothing
+        """
+        self._password = password
+        self._file = file
+        self._salt_file = salt
+        self._crypter = DataEncryption(password, salt)
+
+    def read(self):
+        return None
+
+    def write(self):
+        self._crypter.save_salt()
+        return None

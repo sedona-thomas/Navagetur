@@ -26,7 +26,7 @@ password_entry_prompt = '''<div class="section_box"><form method="POST" action="
                             <input type="submit" value="Password"></form></div>'''
 
 current_user_password = ""
-database = EncryptedJSONDatabase(user_json_file, password)
+database = None
 
 
 @app.route("/")
@@ -67,45 +67,47 @@ def generate_password():
 
 @app.route("/account_security.html")
 def account_security():
-    data = AccountData(user_json_file)
-    security = AccountSecurity(data)
-    table = "" if current_user_password == "" else security.returnTable()
-    password_entry = password_entry_prompt if current_user_password == "" else ""
-    return render_template("account_security.html", table=table, password_entry=password_entry)
+    if database:
+        data = AccountData(database)
+        security = AccountSecurity(data)
+        table = "" if current_user_password == "" else security.returnTable()
+        return render_template("account_security.html", table=table)
+    else:
+        return render_template("account_security.html", table="")
 
 
-@app.route("/set_password.html")
-def set_password():
-    return render_template("set_password.html")
+# @app.route("/set_password.html")
+# def set_password():
+#     return render_template("set_password.html")
 
 
-@app.route('/set_password', methods=['POST'])
-def save_set_password():
-    global current_user_password
-    current_user_password = request.form["password"]
-    clear_data(user_json_file)
-    return redirect("/account_security.html", code=302)
-
-
-def clear_data(filepath):
-    with open(filepath, "w") as file:
-        file.write("")
+# @app.route('/set_password', methods=['POST'])
+# def save_set_password():
+#     global current_user_password
+#     current_user_password = request.form["password"]
+#     database = EncryptedJSONDatabase(user_json_file, current_user_password)
+#     return redirect("/account_security.html", code=302)
 
 
 @app.route('/user_password', methods=['POST'])
 def user_password():
     global current_user_password
     current_user_password = request.form["password"]
+    global database
+    database = EncryptedJSONDatabase(user_json_file, current_user_password)
     return redirect("/account_security.html", code=302)
 
 
 @app.route('/add_account', methods=['POST'])
 def add_account():
-    data = AccountData(user_json_file)
-    data.add(getFields(request))
-    security = AccountSecurity(data)
-    security.generateStats()
-    table = security.returnTable()
+    if database:
+        data = AccountData(database)
+        data.add(getFields(request))
+        security = AccountSecurity(data)
+        security.generateStats()
+        table = security.returnTable()
+    else:
+        table = ""
     return redirect("/account_security.html", code=302)
 
 

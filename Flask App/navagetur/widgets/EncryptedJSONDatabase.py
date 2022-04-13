@@ -18,11 +18,12 @@ class EncryptedJSONDatabase(object):
     def __init__(self, filename, password):
         self._filename = filename
         self._password = password
+        self.crypter = DataEncryption(self._password)
         self._database = self.read()
 
     def __iter__(self):
         ''' Returns the Iterator object '''
-        return JSONDatabaseIterator(self)
+        return EncryptedJSONDatabaseIterator(self)
 
     def add(self, entry):
         self._database.append(entry)
@@ -35,9 +36,9 @@ class EncryptedJSONDatabase(object):
         if os.stat(self._filename).st_size == 0:
             return []
         else:
-            crypter = DataEncryption(self._password)
+
             with open(self._filename, "rb") as file:
-                plaintext = crypter.decrypt(file.read())
+                plaintext = self._crypter.decrypt(file.read())
                 if self._is_json(plaintext):
                     return json.load(plaintext)
                 else:
@@ -45,11 +46,7 @@ class EncryptedJSONDatabase(object):
 
     def write(self):
         with open(self._filename, "wb") as f:
-            if self._encryption:
-                crypter = DataEncryption(self._password)
-                f.write(crypter.encrypt(json.dumps(self._database)))
-            else:
-                f.write(json.dumps(self._database))
+            f.write(self._crypter.encrypt(json.dumps(self._database)))
 
     def getTable(self):
         return "<table>" + self.getTableBody() + "</table>"
@@ -73,7 +70,7 @@ class EncryptedJSONDatabase(object):
             return False
 
 
-class JSONDatabaseIterator:
+class EncryptedJSONDatabaseIterator:
     ''' Iterator class '''
 
     def __init__(self, database):

@@ -11,6 +11,7 @@ __email__ = "sedona.thomas@columbia.edu"
 
 import datetime
 from navagetur.widgets.JSONDatabase import *
+from navagetur.widgets.EncryptedJSONDatabase import *
 
 
 class AccountData(object):
