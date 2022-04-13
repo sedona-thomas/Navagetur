@@ -18,7 +18,7 @@ class EncryptedJSONDatabase(object):
     def __init__(self, filename, password):
         self._filename = filename
         self._password = password
-        self.crypter = DataEncryption(self._password)
+        self._crypter = DataEncryption(self._password)
         self._database = self.read()
 
     def __iter__(self):
@@ -36,7 +36,6 @@ class EncryptedJSONDatabase(object):
         if os.stat(self._filename).st_size == 0:
             return []
         else:
-
             with open(self._filename, "rb") as file:
                 plaintext = self._crypter.decrypt(file.read())
                 if self._is_json(plaintext):
@@ -74,13 +73,13 @@ class EncryptedJSONDatabaseIterator:
     ''' Iterator class '''
 
     def __init__(self, database):
-        self._database = database
+        self._json_database = database
         self._index = 0
 
     def __next__(self):
         ''''Returns the next value from database object's list'''
-        if self._index < (len(self._database._database)):
-            result = self._database._database[self._index]
+        if self._index < (len(self._json_database._database)):
+            result = self._json_database._database[self._index]
             self._index += 1
             return result
         raise StopIteration
