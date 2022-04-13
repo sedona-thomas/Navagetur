@@ -108,7 +108,7 @@ class DataEncryption(object):
 
         :return: returns full filepath
         """
-        return pwd + "data/" + file
+        return pwd + "navagetur/data/" + file
 
     def _read_salt(self):
         """
@@ -116,8 +116,8 @@ class DataEncryption(object):
 
         :return: nothing
         """
-        with open(self._salt_file, "rb") as salt_file:
-            self._salt = file.read()
+        with open(self._location(self._salt_file), "rb") as salt_file:
+            self._salt = salt_file.read()
 
 
 class ReadWriteEncryption(object):
