@@ -16,10 +16,10 @@ from navagetur.widgets.encryption import *
 
 class JSONDatabase(object):
     def __init__(self, filename, password=""):
-        self._encryption = password != ""
         self._filename = filename
-        self._database = self.read()
         self._password = password
+        self._encryption = (password != "")
+        self._database = self.read()
 
     def __iter__(self):
         ''' Returns the Iterator object '''
@@ -37,20 +37,22 @@ class JSONDatabase(object):
             return []
         elif self._encryption:
             crypter = DataEncryption(self._password)
-            with open(self._filename) as file:
-                return json.load(crypter.decrypt(file))
-        else:
+            with open(self._filename, "rb") as file:
+                plaintext = crypter.decrypt(file.read())
+                return json.load(plaintext)
+        elif self.is_json():
             with open(self._filename) as file:
                 return json.load(file)
+        else:
+            return []
 
     def write(self):
-        f = open(self._filename, "w")
-        if self._encryption:
-            crypter = DataEncryption(self._password)
-            f.write(crypter.encrypt(json.dumps(self._database)))
-        else:
-            f.write(json.dumps(self._database))
-        f.close()
+        with open(self._filename, "wb") as f:
+            if self._encryption:
+                crypter = DataEncryption(self._password)
+                f.write(crypter.encrypt(json.dumps(self._database)))
+            else:
+                f.write(json.dumps(self._database))
 
     def getTable(self):
         return "<table>" + self.getTableBody() + "</table>"
@@ -65,6 +67,13 @@ class JSONDatabase(object):
                 tb += "<td>" + cell + "</td>"
             tb += "</tr>"
         return tb
+
+    def is_json(self):
+        try:
+            data = json.load(open(self._filename))
+            return True
+        except:
+            return False
 
 
 class JSONDatabaseIterator:

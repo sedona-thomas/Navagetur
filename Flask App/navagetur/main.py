@@ -19,16 +19,12 @@ from navagetur.widgets.personal_uniqueness import *
 from navagetur.widgets.directory_location import *
 
 user_json_file = pwd + "navagetur/data/user.json"
-password = ""
-password_entry_prompt = '''<form method="POST" action="/user_password">
-                                <p>
-                                    <label id="password">
-                                        Please type your password: <input name="password" type="text" size="20">
-                                    </label>
-                                </p>
-                                <input type="submit" value="Password">
-                            </form>
-                        '''
+password_entry_prompt = '''<div class="section_box"><form method="POST" action="/user_password">
+                            <p><label id="password">Please type your password: 
+                            <input name="password" type="text" size="20"></label></p>
+                            <input type="submit" value="Password"></form></div>'''
+
+current_user_password = ""
 
 
 @app.route("/")
@@ -70,11 +66,14 @@ def generate_password():
 
 @app.route("/account_security.html")
 def account_security():
-    print(password)
-    data = AccountData(user_json_file)
+    print("pw: ", current_user_password)
+    if current_user_password == "":
+        data = AccountData(user_json_file)
+    else:
+        data = AccountData(user_json_file, current_user_password)
     security = AccountSecurity(data)
-    table = "" if password == "" else security.returnTable()
-    password_entry = "" if password == "" else password_entry_prompt
+    table = "" if current_user_password == "" else security.returnTable()
+    password_entry = password_entry_prompt if current_user_password == "" else ""
     return render_template("account_security.html", table=table, password_entry=password_entry)
 
 
@@ -84,8 +83,9 @@ def set_password():
 
 
 @app.route('/set_password', methods=['POST'])
-def save_setF_password():
-    password = request.form["password"]
+def save_set_password():
+    global current_user_password
+    current_user_password = request.form["password"]
     clear_data(user_json_file)
     return redirect("/account_security.html", code=302)
 
@@ -97,16 +97,18 @@ def clear_data(filepath):
 
 @app.route('/user_password', methods=['POST'])
 def user_password():
-    password = request.form["password"]
+    global current_user_password
+    current_user_password = request.form["password"]
+    print("pw2: ", current_user_password)
     return redirect("/account_security.html", code=302)
 
 
 @app.route('/add_account', methods=['POST'])
 def add_account():
-    if password == "":
+    if current_user_password == "":
         data = AccountData(user_json_file)
     else:
-        data = AccountData(user_json_file, password)
+        data = AccountData(user_json_file, current_user_password)
     data.add(getFields(request))
     security = AccountSecurity(data)
     security.generateStats()

@@ -89,7 +89,7 @@ class DataEncryption(object):
 
         :return: returns key for current cipher
         """
-        if os.path.exists(self._location(file)):
+        if os.path.exists(self._location(self._salt_file)):
             self._read_salt()
         key_derivation_function = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
