@@ -13,7 +13,6 @@ from flask import render_template, request, redirect
 import requests
 from navagetur.widgets.AccountData import *
 from navagetur.widgets.AccountSecurity import *
-from navagetur.widgets.JSONDatabase import *
 from navagetur.widgets.passwords import *
 from navagetur.widgets.law_locator import *
 from navagetur.widgets.personal_uniqueness import *
@@ -120,13 +119,14 @@ def enter_zipcode():
 def personal_uniqueness():
     return render_template("personal_uniqueness.html")
 
+
 @app.route('/enter_characteristics', methods=['POST'])
 def enter_characteristics():
     data = {"zipcode": int(request.form["zipcode"]) if len(request.form["zipcode"]) == 5 else None,
             "gender": request.form["gender"] if request.form["gender"] != "choose" else None,
             "income": int(request.form["income"]) if len(request.form["income"]) > 0 else None}
     uniqueness_processor = Uniqueness(data)
-    uniqueness = uniqueness_processor.personalUniqueness() 
+    uniqueness = uniqueness_processor.personalUniqueness()
     #uniqueness = ", ".join([str(x) for x in [zipcode, gender, income]])
     return render_template("personal_uniqueness.html", uniqueness=uniqueness)
 
