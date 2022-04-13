@@ -70,6 +70,7 @@ def generate_password():
 
 @app.route("/account_security.html")
 def account_security():
+    print(password)
     data = AccountData(user_json_file)
     security = AccountSecurity(data)
     table = "" if password == "" else security.returnTable()
