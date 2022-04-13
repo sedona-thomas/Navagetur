@@ -20,6 +20,15 @@ from navagetur.widgets.directory_location import *
 
 user_json_file = pwd + "navagetur/data/user.json"
 password = ""
+password_entry_prompt = '''<form method="POST" action="/user_password">
+                                <p>
+                                    <label id="password">
+                                        Please type your password: <input name="password" type="text" size="20">
+                                    </label>
+                                </p>
+                                <input type="submit" value="Password">
+                            </form>
+                        '''
 
 
 @app.route("/")
@@ -64,7 +73,8 @@ def account_security():
     data = AccountData(user_json_file)
     security = AccountSecurity(data)
     table = security.returnTable()
-    return render_template("account_security.html", table=table)
+    password_entry = "" if password == "" else password_entry_prompt
+    return render_template("account_security.html", table=table, password_entry=password_entry)
 
 
 @app.route("/set_password.html")
