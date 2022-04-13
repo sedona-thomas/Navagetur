@@ -43,6 +43,7 @@ class DataEncryption(object):
         """
         byte_string = self._string_to_bytes(plaintext)
         token = self._crypter.encrypt(byte_string)
+        self._save_salt()
         return token
 
     def decrypt(self, ciphertext):
@@ -56,7 +57,7 @@ class DataEncryption(object):
         string = self._byte_to_utf8(byte_string)
         return string
 
-    def save_salt(self):
+    def _save_salt(self):
         """
         Saves the current salt in the data folder
 

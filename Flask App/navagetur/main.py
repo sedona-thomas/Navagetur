@@ -20,10 +20,6 @@ from navagetur.widgets.personal_uniqueness import *
 from navagetur.widgets.directory_location import *
 
 user_json_file = pwd + "navagetur/data/user.json"
-password_entry_prompt = '''<div class="section_box"><form method="POST" action="/user_password">
-                            <p><label id="password">Please type your password: 
-                            <input name="password" type="text" size="20"></label></p>
-                            <input type="submit" value="Password"></form></div>'''
 
 is_password = False
 current_user_password = ""
@@ -90,6 +86,7 @@ def user_password():
 @app.route('/add_account', methods=['POST'])
 def add_account():
     if is_password:
+        database = EncryptedJSONDatabase(user_json_file, current_user_password)
         data = AccountData(database)
         data.add(getFields(request))
         security = AccountSecurity(data)
