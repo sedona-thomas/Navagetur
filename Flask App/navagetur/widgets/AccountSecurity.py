@@ -10,7 +10,6 @@ __email__ = "sedona.thomas@columbia.edu"
 
 import re
 from navagetur.widgets.passwords import Password
-from navagetur.widgets.JSONDatabase import *
 from navagetur.widgets.AccountData import *
 
 
