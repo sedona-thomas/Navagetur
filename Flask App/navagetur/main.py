@@ -19,6 +19,7 @@ from navagetur.widgets.personal_uniqueness import *
 from navagetur.widgets.directory_location import *
 
 user_json_file = pwd + "navagetur/data/user.json"
+password = ""
 
 
 @app.route("/")
@@ -66,9 +67,35 @@ def account_security():
     return render_template("account_security.html", table=table)
 
 
+@app.route("/set_password.html")
+def set_password():
+    return render_template("set_password.html")
+
+
+@app.route('/set_password', methods=['POST'])
+def save_setF_password():
+    password = request.form["password"]
+    clear_data(user_json_file)
+    return redirect("/account_security.html", code=302)
+
+
+def clear_data(filepath):
+    with open(filepath, "w") as file:
+        file.write("")
+
+
+@app.route('/user_password', methods=['POST'])
+def user_password():
+    password = request.form["password"]
+    return redirect("/account_security.html", code=302)
+
+
 @app.route('/add_account', methods=['POST'])
 def add_account():
-    data = AccountData(user_json_file)
+    if password == "":
+        data = AccountData(user_json_file)
+    else:
+        data = AccountData(user_json_file, password)
     data.add(getFields(request))
     security = AccountSecurity(data)
     security.generateStats()
