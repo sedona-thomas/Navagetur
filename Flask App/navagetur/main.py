@@ -72,7 +72,7 @@ def generate_password():
 def account_security():
     data = AccountData(user_json_file)
     security = AccountSecurity(data)
-    table = security.returnTable()
+    table = "" if password == "" else security.returnTable()
     password_entry = "" if password == "" else password_entry_prompt
     return render_template("account_security.html", table=table, password_entry=password_entry)
 
