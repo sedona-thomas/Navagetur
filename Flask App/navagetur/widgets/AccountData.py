@@ -15,11 +15,8 @@ from navagetur.widgets.JSONDatabase import *
 
 class AccountData(object):
 
-    def __init__(self, filename, password=""):
-        if password == "":
-            self.accounts = JSONDatabase(filename)
-        else:
-            self.accounts = JSONDatabase(filename, password)
+    def __init__(self, database):
+        self.accounts = database
         self.fields = {"site_name": "Website Name",
                        "username": "Username",
                        "email": "Email",
