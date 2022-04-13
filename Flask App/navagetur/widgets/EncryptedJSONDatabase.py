@@ -34,10 +34,10 @@ class EncryptedJSONDatabase(object):
         return self._database
 
     def read(self):
-        if os.stat(self._filename).st_size == 0:
+        if os.stat(self._filepath + self._filename).st_size == 0:
             return []
         else:
-            with open(self._filename, "rb") as file:
+            with open(self._filepath + self._filename, "rb") as file:
                 plaintext = self._crypter.decrypt(file.read())
                 if self._is_json(plaintext):
                     return json.load(plaintext)
@@ -45,8 +45,9 @@ class EncryptedJSONDatabase(object):
                     return []
 
     def write(self):
-        with open(self._filename, "wb") as f:
+        with open(self._filepath + self._filename, "wb") as f:
             f.write(self._crypter.encrypt(json.dumps(self._database)))
+            self._crypter.save_salt()
 
     def getTable(self):
         return "<table>" + self.getTableBody() + "</table>"

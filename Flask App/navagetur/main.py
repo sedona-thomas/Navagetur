@@ -65,15 +65,12 @@ def generate_password():
 
 @app.route("/account_security.html")
 def account_security():
-    if is_password:
-        database = EncryptedJSONDatabase(
-            user_json_filepath, user_json_file, current_user_password)
-        data = AccountData(database)
-        security = AccountSecurity(data)
-        table = "" if current_user_password == "" else security.returnTable()
-        return render_template("account_security.html", table=table)
-    else:
-        return render_template("account_security.html")
+    database = EncryptedJSONDatabase(
+        user_json_filepath, user_json_file, current_user_password)
+    data = AccountData(database)
+    security = AccountSecurity(data)
+    table = "" if current_user_password == "" else security.returnTable()
+    return render_template("account_security.html", table=table)
 
 
 @app.route('/user_password', methods=['POST'])
@@ -87,16 +84,13 @@ def user_password():
 
 @app.route('/add_account', methods=['POST'])
 def add_account():
-    if is_password:
-        database = EncryptedJSONDatabase(user_json_file, current_user_password)
-        data = AccountData(database)
-        data.add(getFields(request))
-        security = AccountSecurity(data)
-        security.generateStats()
-        table = security.returnTable()
-        print(database.getAll())
-    else:
-        table = ""
+    database = EncryptedJSONDatabase(
+        user_json_filepath, user_json_file, current_user_password)
+    data = AccountData(database)
+    data.add(getFields(request))
+    security = AccountSecurity(data)
+    security.generateStats()
+    table = security.returnTable()
     return redirect("/account_security.html", code=302)
 
 
@@ -153,7 +147,7 @@ def enter_characteristics():
             "income": int(request.form["income"]) if len(request.form["income"]) > 0 else None}
     uniqueness_processor = Uniqueness(data)
     uniqueness = uniqueness_processor.personalUniqueness()
-    #uniqueness = ", ".join([str(x) for x in [zipcode, gender, income]])
+    # uniqueness = ", ".join([str(x) for x in [zipcode, gender, income]])
     return render_template("personal_uniqueness.html", uniqueness=uniqueness)
 
 

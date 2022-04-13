@@ -30,6 +30,7 @@ class DataEncryption(object):
         """
         self._password = self._string_to_bytes(password)
         self._salt = os.urandom(16)
+        self._filepath = filepath
         self._salt_file = file
         self._key = self._make_key()
         self._crypter = Fernet(self._key)
@@ -117,6 +118,7 @@ class DataEncryption(object):
         """
         with open(self._location(self._salt_file), "rb") as salt_file:
             self._salt = salt_file.read()
+        print(self._salt)
 
 
 class ReadWriteEncryption(object):
