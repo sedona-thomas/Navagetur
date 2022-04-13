@@ -11,6 +11,7 @@ __email__ = "sedona.thomas@columbia.edu"
 from navagetur import app
 from flask import render_template, request, redirect
 import requests
+from navagetur.widgets.EncryptedJSONDatabase import *
 from navagetur.widgets.AccountData import *
 from navagetur.widgets.AccountSecurity import *
 from navagetur.widgets.passwords import *
@@ -25,6 +26,7 @@ password_entry_prompt = '''<div class="section_box"><form method="POST" action="
                             <input type="submit" value="Password"></form></div>'''
 
 current_user_password = ""
+database = EncryptedJSONDatabase(user_json_file, password)
 
 
 @app.route("/")
@@ -60,17 +62,12 @@ def enter_password():
 def generate_password():
     password_handler = Password()
     random_password = password_handler.generate(15)
-    print(random_password)
     return render_template("password.html", random_password=random_password)
 
 
 @app.route("/account_security.html")
 def account_security():
-    print("pw: ", current_user_password)
-    if current_user_password == "":
-        data = AccountData(user_json_file)
-    else:
-        data = AccountData(user_json_file, current_user_password)
+    data = AccountData(user_json_file)
     security = AccountSecurity(data)
     table = "" if current_user_password == "" else security.returnTable()
     password_entry = password_entry_prompt if current_user_password == "" else ""
@@ -99,16 +96,12 @@ def clear_data(filepath):
 def user_password():
     global current_user_password
     current_user_password = request.form["password"]
-    print("pw2: ", current_user_password)
     return redirect("/account_security.html", code=302)
 
 
 @app.route('/add_account', methods=['POST'])
 def add_account():
-    if current_user_password == "":
-        data = AccountData(user_json_file)
-    else:
-        data = AccountData(user_json_file, current_user_password)
+    data = AccountData(user_json_file)
     data.add(getFields(request))
     security = AccountSecurity(data)
     security.generateStats()
