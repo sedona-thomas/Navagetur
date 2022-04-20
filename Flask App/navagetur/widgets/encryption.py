@@ -22,14 +22,14 @@ class DataEncryption(object):
     DataEncryption encrypts and decrypts text given a password and salt
     """
 
-    def __init__(self, password, filepath, file="salt.txt"):
+    def __init__(self, first, password, filepath, file="salt.txt"):
         """
         Construct a new 'DataEncryption' object.
 
         :return: returns nothing
         """
         self._password = self._string_to_bytes(password)
-        self._salt = os.urandom(16)
+        self._salt = os.urandom(16) if first else self._read_salt()
         self._filepath = filepath
         self._salt_file = file
         self._key = self._make_key()
@@ -90,8 +90,6 @@ class DataEncryption(object):
 
         :return: returns key for current cipher
         """
-        if os.path.exists(self._location(self._salt_file)):
-            self._read_salt()
         key_derivation_function = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
