@@ -41,6 +41,24 @@ def widgets():
     return render_template("widgets.html")
 
 
+@app.route("/set_password.html")
+def set_password():
+    return render_template("set_password.html")
+
+
+@app.route('/set_password', methods=['POST'])
+def set_initial_password():
+    update_password(request.form["password"])
+    print(current_user_password)
+    crypter = DataEncryption(True, current_user_password, user_json_filepath)
+    database = JSONDatabase("[]")
+    print(database)
+    encrypted_json = crypter.encrypt(str(database))
+    with open(user_json_filepath + user_json_file, "wb") as file:
+        file.write(encrypted_json)
+    return redirect("/account_security.html", code=302)
+
+
 @app.route("/account_security.html")
 def account_security():
     return render_template("account_security.html", table=make_table())
@@ -71,7 +89,8 @@ def add_account():
 def make_table():
     if is_password:
         crypter = DataEncryption(
-            True, current_user_password, user_json_filepath)
+            False, current_user_password, user_json_filepath)
+        crypter.save_salt()
         with open(user_json_filepath + user_json_file, "rb") as file:
             file_string = crypter.decrypt(file.read())
         database = JSONDatabase(file_string)
