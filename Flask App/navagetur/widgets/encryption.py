@@ -114,30 +114,75 @@ class DataEncryption(object):
         """
         Reads a saved salt
 
-        :return: nothing
+        :return: saved salt value
         """
         with open(self._location(self._salt_file), "rb") as salt_file:
-            self._salt = salt_file.read()
-        print(self._salt)
+            return salt_file.read()
 
 
-class ReadWriteEncryption(object):
+# class DataEncryptionTest(object):
 
-    def __init__(self, password, file, salt="salt.txt"):
-        """
-        Construct a new 'ReadWriteEncryption' object.
+#     def __init__(self, first, password):
+#         self._password = self._string_to_bytes(password)
+#         self._salt = os.urandom(16) if first else self._read_salt()
+#         self._key = self._make_key()
+#         self._crypter = Fernet(self._key)
 
-        :return: returns nothing
-        """
-        self._password = password
-        self._file = file
-        self._salt_file = salt
-        self._crypter = DataEncryption(password, salt)
+#     def encrypt(self, plaintext):
+#         byte_string = self._string_to_bytes(plaintext)
+#         token = self._crypter.encrypt(byte_string)
+#         return token
 
-    def read(self, string):
-        return self._crypter.decrypt(string)
+#     def decrypt(self, ciphertext):
+#         byte_string = self._crypter.decrypt(ciphertext)
+#         string = self._byte_to_utf8(byte_string)
+#         return string
 
-    def write(self, string):
-        self._crypter.save_salt()
-        with open(self._location(self._file), "wb") as file:
-            file.write(self._crypter.encrypt(string))
+#     def save_salt(self, location):
+#         with open(location, "wb") as salt_file:
+#             salt_file.write(self._salt)
+
+#     def _make_key(self):
+#         print(type(self._salt))
+#         print(self._salt)
+#         key_derivation_function = PBKDF2HMAC(
+#             algorithm=hashes.SHA256(),
+#             length=32,
+#             salt=self._salt,
+#             iterations=390000,
+#         )
+#         derived_password = key_derivation_function.derive(self._password)
+#         key = base64.urlsafe_b64encode(derived_password)
+#         return key
+
+#     def _read_salt(self):
+#         with open("salt.txt", "rb") as salt_file:
+#             return salt_file.read()
+
+#     def _string_to_bytes(self, string):
+#         return string.encode('utf-8')
+
+#     def _byte_to_utf8(self, byte_string):
+#         return byte_string.decode("utf-8")
+
+
+# if __name__ == "__main__":
+#     text = "hello world"
+#     password = "password"
+#     crypter = DataEncryptionTest(True, password)
+#     encryption = crypter.encrypt(text)
+#     decryption = crypter.decrypt(encryption)
+
+#     crypter.save_salt("./salt.txt")
+
+#     print("1", encryption)
+#     print("2", decryption)
+
+#     text2 = "hello world2"
+#     password2 = "password2"
+#     crypter2 = DataEncryptionTest(False, password2)
+#     encryption2 = crypter.encrypt(text2)
+#     decryption2 = crypter.decrypt(encryption2)
+
+#     print("3", encryption2)
+#     print("4", decryption2)
