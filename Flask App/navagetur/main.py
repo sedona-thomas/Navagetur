@@ -41,6 +41,26 @@ def widgets():
     return render_template("widgets.html")
 
 
+@app.route("/password.html")
+def password():
+    return render_template("password.html")
+
+
+@app.route('/enter_password', methods=['POST'])
+def enter_password():
+    password_handler = Password()
+    time_to_crack = password_handler.brute_force_attack(
+        request.form["password"])
+    return render_template("password.html", time_to_crack=time_to_crack)
+
+
+@app.route('/generate_password', methods=['POST'])
+def generate_password():
+    password_handler = Password()
+    random_password = password_handler.generate(15)
+    return render_template("password.html", random_password=random_password)
+
+
 @app.route("/set_password.html")
 def set_password():
     return render_template("set_password.html")
@@ -49,11 +69,8 @@ def set_password():
 @app.route('/set_password', methods=['POST'])
 def set_initial_password():
     update_password(request.form["password"])
-    print(current_user_password)
     crypter = DataEncryption(True, current_user_password, user_json_filepath)
-    crypter.save_salt()
     database = JSONDatabase("[]")
-    print(database)
     encrypted_json = crypter.encrypt(str(database))
     with open(user_json_filepath + user_json_file, "wb") as file:
         file.write(encrypted_json)
@@ -81,7 +98,7 @@ def add_account():
         database = JSONDatabase(file_string)
         data = AccountData(database)
         data.add(getFields(request))
-        encrypted_json = crypter.encrypt(str(data.getAccounts))
+        encrypted_json = crypter.encrypt(str(data.getAccounts()))
         with open(user_json_filepath + user_json_file, "wb") as file:
             file.write(encrypted_json)
     return redirect("/account_security.html", code=302)
@@ -134,28 +151,6 @@ def split_list(li):
 
 def dateFormatting(request, name):
     return request.form["password_change"] if request.form["password_change"] else None
-
-#############################################################################################
-
-
-@app.route("/password.html")
-def password():
-    return render_template("password.html")
-
-
-@app.route('/enter_password', methods=['POST'])
-def enter_password():
-    password_handler = Password()
-    time_to_crack = password_handler.brute_force_attack(
-        request.form["password"])
-    return render_template("password.html", time_to_crack=time_to_crack)
-
-
-@app.route('/generate_password', methods=['POST'])
-def generate_password():
-    password_handler = Password()
-    random_password = password_handler.generate(15)
-    return render_template("password.html", random_password=random_password)
 
 
 @app.route("/law_locator.html")
