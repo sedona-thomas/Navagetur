@@ -41,57 +41,42 @@ def widgets():
     return render_template("widgets.html")
 
 
-@app.route("/password.html")
-def password():
-    return render_template("password.html")
-
-
-@app.route('/enter_password', methods=['POST'])
-def enter_password():
-    password_handler = Password()
-    time_to_crack = password_handler.brute_force_attack(
-        request.form["password"])
-    return render_template("password.html", time_to_crack=time_to_crack)
-
-
-@app.route('/generate_password', methods=['POST'])
-def generate_password():
-    password_handler = Password()
-    random_password = password_handler.generate(15)
-    return render_template("password.html", random_password=random_password)
-
-
-#############################################################################################
-
 @app.route("/account_security.html")
 def account_security():
-    database = EncryptedJSONDatabase(
-        user_json_filepath, user_json_file, current_user_password)
-    data = AccountData(database)
-    security = AccountSecurity(data)
-    table = "" if current_user_password == "" else security.returnTable()
-    return render_template("account_security.html", table=table)
+    return render_template("account_security.html", table=make_table())
 
 
 @app.route('/user_password', methods=['POST'])
 def user_password():
-    global current_user_password
-    current_user_password = request.form["password"]
-    global is_password
-    is_password = True
+    update_password(request.form["password"])
     return redirect("/account_security.html", code=302)
 
 
 @app.route('/add_account', methods=['POST'])
 def add_account():
-    database = EncryptedJSONDatabase(
-        user_json_filepath, user_json_file, current_user_password)
-    data = AccountData(database)
-    data.add(getFields(request))
-    security = AccountSecurity(data)
-    security.generateStats()
-    table = security.returnTable()
+    table = make_table()
     return redirect("/account_security.html", code=302)
+
+
+def make_table():
+    if is_password:
+        crypter = DataEncryption(current_user_password, user_json_filepath)
+        with open(user_json_filepath + user_json_file, "rb") as file:
+            file_string = crypter.decrypt(file.read())
+        database = JSONDatabase(file_string)
+        data = AccountData(database)
+        security = AccountSecurity(data)
+        security.generateStats()
+        return security.returnTable()
+    else:
+        return ""
+
+
+def update_password(password):
+    global current_user_password
+    current_user_password = password
+    global is_password
+    is_password = True
 
 
 def getFields(request):
@@ -120,6 +105,26 @@ def dateFormatting(request, name):
     return request.form["password_change"] if request.form["password_change"] else None
 
 #############################################################################################
+
+
+@app.route("/password.html")
+def password():
+    return render_template("password.html")
+
+
+@app.route('/enter_password', methods=['POST'])
+def enter_password():
+    password_handler = Password()
+    time_to_crack = password_handler.brute_force_attack(
+        request.form["password"])
+    return render_template("password.html", time_to_crack=time_to_crack)
+
+
+@app.route('/generate_password', methods=['POST'])
+def generate_password():
+    password_handler = Password()
+    random_password = password_handler.generate(15)
+    return render_template("password.html", random_password=random_password)
 
 
 @app.route("/law_locator.html")
@@ -159,76 +164,3 @@ def table():
 @app.route("/citations.html")
 def citations():
     return render_template("citations.html")
-
-
-# @app.route("/set_password.html")
-# def set_password():
-#     return render_template("set_password.html")
-
-
-# @app.route('/set_password', methods=['POST'])
-# def save_set_password():
-#     global current_user_password
-#     current_user_password = request.form["password"]
-#     database = EncryptedJSONDatabase(user_json_file, current_user_password)
-#     return redirect("/account_security.html", code=302)
-
-# @app.route("/account_security.html")
-# def account_security():
-#     if is_password:
-#         database = EncryptedJSONDatabase(user_json_file, current_user_password)
-#         data = AccountData(database)
-#         security = AccountSecurity(data)
-#         table = "" if current_user_password == "" else security.returnTable()
-#         return render_template("account_security.html", table=table)
-#     else:
-#         return render_template("account_security.html", table="")
-
-
-# @app.route('/user_password', methods=['POST'])
-# def user_password():
-#     global current_user_password
-#     current_user_password = request.form["password"]
-#     global is_password
-#     is_password = True
-#     return redirect("/account_security.html", code=302)
-
-
-# @app.route('/add_account', methods=['POST'])
-# def add_account():
-#     if is_password:
-#         database = EncryptedJSONDatabase(user_json_file, current_user_password)
-#         data = AccountData(database)
-#         data.add(getFields(request))
-#         security = AccountSecurity(data)
-#         security.generateStats()
-#         table = security.returnTable()
-#     else:
-#         table = ""
-#     return redirect("/account_security.html", code=302)
-
-
-# def getFields(request):
-#     fields = {"site_name": request.form["site_name"],
-#               "username": request.form["username"],
-#               "email": request.form["email"],
-#               "password": request.form["password"],
-#               "password_change": dateFormatting(request, "password_change"),
-#               "mfa": request.form.get("mfa") != None}
-#     if fields["mfa"]:
-#         fields["app_passcodes"] = request.form.get("app_passcodes") != None
-#         fields["authenticators"] = split_list(request.form["authenticators"])
-#         fields["keys"] = split_list(request.form["keys"])
-#         fields["phone_numbers"] = split_list(request.form["phone_numbers"])
-#     else:
-#         for k in ["app_passcodes", "authenticators", "keys", "phone_numbers"]:
-#             fields[k] = None
-#     return fields
-
-
-# def split_list(li):
-#     return [x.strip() for x in li.split(",")]
-
-
-# def dateFormatting(request, name):
-#     return request.form["password_change"] if request.form["password_change"] else None
