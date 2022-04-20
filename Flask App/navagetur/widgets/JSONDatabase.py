@@ -15,9 +15,8 @@ from navagetur.widgets.encryption import *
 
 
 class JSONDatabase(object):
-    def __init__(self, filename):
-        self._filename = filename
-        self._database = self.read()
+    def __init__(self, string):
+        self._database = self.read(string)
 
     def __iter__(self):
         ''' Returns the Iterator object '''
@@ -30,12 +29,9 @@ class JSONDatabase(object):
     def getAll(self):
         return self._database
 
-    def read(self):
-        if os.stat(self._filename).st_size == 0:
-            return []
-        elif self.is_json():
-            with open(self._filename) as file:
-                return json.load(file)
+    def read(self, string):
+        if self.is_json(string):
+            return json.load(string)
         else:
             return []
 
@@ -57,9 +53,9 @@ class JSONDatabase(object):
             tb += "</tr>"
         return tb
 
-    def is_json(self):
+    def is_json(self, string):
         try:
-            data = json.load(open(self._filename))
+            data = json.load(string)
             return True
         except:
             return False
