@@ -39,6 +39,9 @@ class JSONDatabase(object):
         with open(self._filename, "w") as f:
             f.write(json.dumps(self._database))
 
+    def __str__(self):
+        return json.dumps(self._database)
+
     def getTable(self):
         return "<table>" + self.getTableBody() + "</table>"
 
