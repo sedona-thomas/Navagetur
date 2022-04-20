@@ -13,7 +13,6 @@ import os
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from navagetur.widgets.directory_location import *
 
 
 class DataEncryption(object):
@@ -29,9 +28,9 @@ class DataEncryption(object):
         :return: returns nothing
         """
         self._password = self._string_to_bytes(password)
-        self._salt = os.urandom(16) if first else self._read_salt()
         self._filepath = filepath
         self._salt_file = file
+        self._salt = os.urandom(16) if first else self._read_salt()
         self._key = self._make_key()
         self._crypter = Fernet(self._key)
 
@@ -106,7 +105,7 @@ class DataEncryption(object):
 
         :return: returns full filepath
         """
-        return pwd + "navagetur/data/" + file
+        return self._filepath + file
 
     def _read_salt(self):
         """
