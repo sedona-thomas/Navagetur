@@ -30,7 +30,7 @@ class JSONDatabase(object):
 
     def read(self, string):
         if self.is_json(string):
-            return json.load(string)
+            return json.loads(string)
         else:
             return []
 
@@ -57,7 +57,7 @@ class JSONDatabase(object):
 
     def is_json(self, string):
         try:
-            data = json.load(string)
+            data = json.loads(string)
             return True
         except:
             return False
