@@ -9,8 +9,8 @@ __links__ = ["https://github.com/sedona-thomas/Navagetur"]
 __email__ = "sedona.thomas@columbia.edu"
 
 import re
-from passwords import Password
-from AccountData import *
+#from passwords import Password
+#from AccountData import *
 
 
 class AccountSecurity(object):

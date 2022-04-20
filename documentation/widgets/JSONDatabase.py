@@ -11,7 +11,7 @@ __email__ = "sedona.thomas@columbia.edu"
 
 import json
 import os
-from encryption import *
+#from encryption import *
 
 
 class JSONDatabase(object):

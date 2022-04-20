@@ -16,7 +16,7 @@ import string
 import math
 import time
 import os
-from directory_location import *
+#from directory_location import *
 
 
 class Password(object):
