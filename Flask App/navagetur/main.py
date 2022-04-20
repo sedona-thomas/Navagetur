@@ -51,6 +51,7 @@ def set_initial_password():
     update_password(request.form["password"])
     print(current_user_password)
     crypter = DataEncryption(True, current_user_password, user_json_filepath)
+    crypter.save_salt()
     database = JSONDatabase("[]")
     print(database)
     encrypted_json = crypter.encrypt(str(database))
