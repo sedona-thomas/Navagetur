@@ -24,7 +24,6 @@ class JSONDatabase(object):
 
     def add(self, entry):
         self._database.append(entry)
-        self.write()
 
     def getAll(self):
         return self._database
