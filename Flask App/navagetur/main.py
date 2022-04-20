@@ -54,7 +54,16 @@ def user_password():
 
 @app.route('/add_account', methods=['POST'])
 def add_account():
-    table = make_table()
+    if is_password:
+        crypter = DataEncryption(is_password, current_user_password, user_json_filepath)
+        with open(user_json_filepath + user_json_file, "rb") as file:
+            file_string = crypter.decrypt(file.read())
+        database = JSONDatabase(file_string)
+        data = AccountData(database)
+        data.add(getFields(request))
+        encrypted_json = crypter.encrypt(str(data.getAccounts))
+        with open(user_json_filepath + user_json_file, "wb") as file:
+            file.write(encrypted_json)
     return redirect("/account_security.html", code=302)
 
 
