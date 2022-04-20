@@ -55,7 +55,8 @@ def user_password():
 @app.route('/add_account', methods=['POST'])
 def add_account():
     if is_password:
-        crypter = DataEncryption(is_password, current_user_password, user_json_filepath)
+        crypter = DataEncryption(
+            is_password, current_user_password, user_json_filepath)
         with open(user_json_filepath + user_json_file, "rb") as file:
             file_string = crypter.decrypt(file.read())
         database = JSONDatabase(file_string)
@@ -69,7 +70,7 @@ def add_account():
 
 def make_table():
     if is_password:
-        crypter = DataEncryption(current_user_password, user_json_filepath)
+        crypter = DataEncryption(is_password, current_user_password, user_json_filepath)
         with open(user_json_filepath + user_json_file, "rb") as file:
             file_string = crypter.decrypt(file.read())
         database = JSONDatabase(file_string)
